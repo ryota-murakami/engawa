@@ -1,0 +1,25 @@
+services:
+    postgres:
+        image: postgres:18.6
+        environment:
+            POSTGRES_DB: engawa
+            POSTGRES_USER: engawa
+            POSTGRES_PASSWORD: engawa-local-only
+        ports:
+            - "127.0.0.1:55432:5432"
+        volumes:
+            - engawa_pg:/var/lib/postgresql
+            - ./docker/postgres/init-test-db.sql:/docker-entrypoint-initdb.d/10-test.sql:ro
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U engawa -d engawa"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+    mailpit:
+        image: axllent/mailpit:v1.31.6
+        ports:
+            - "127.0.0.1:1025:1025"
+            - "127.0.0.1:8025:8025"
+
+volumes:
+    engawa_pg:
