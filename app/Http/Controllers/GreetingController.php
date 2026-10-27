@@ -7,7 +7,7 @@ use App\Services\Greeting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-// ごおd
+
 class GreetingController extends Controller
 {
     /** Render /learn; Laravel injects the service registered by its class name. */
