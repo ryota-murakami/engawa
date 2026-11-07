@@ -12,6 +12,6 @@ class Greeting
      */
     public function forMember(User $user): string
     {
-        return 'こんにちは、' . $user->name . 'さん';
+        return 'こんにちは、'.$user->name.'さん';
     }
 }
