@@ -16,7 +16,8 @@ class Chapter03GreetingTest extends TestCase
         $this->withoutVite();
 
         // Arrange
-        $user = User::factory()->create(['name' => 'アリス']);
+        /** @var User $user */
+        $user = User::factory()->createOne(['name' => 'アリス']);
 
         // Act
         $response = $this->actingAs($user)->get('/learn');

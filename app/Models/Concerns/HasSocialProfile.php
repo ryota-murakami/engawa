@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Models\Concerns;
 
 use App\Models\Diary;
 use App\Models\Media;

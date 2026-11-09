@@ -16,8 +16,10 @@ class Chapter06VisibilityTest extends TestCase
     {
         $this->withoutVite();
         // Arrange
-        $author = User::factory()->create();
-        $viewer = User::factory()->create();
+        /** @var User $author */
+        $author = User::factory()->createOne();
+        /** @var User $viewer */
+        $viewer = User::factory()->createOne();
         Diary::create(['user_id' => $author->id, 'title' => '秘密', 'body' => '非公開', 'visibility' => 'private']);
 
         // Act

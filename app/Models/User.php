@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Concerns\HasSocialProfile;
+use App\Models\Concerns\HasSocialProfile;
 use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +28,12 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $remember_token
  * @property CarbonImmutable|null $created_at
  * @property CarbonImmutable|null $updated_at
+ * @property string|null $bio
+ * @property bool $email_social_notifications
+ * @property-read Media|null $avatar
+ * @property-read Collection<int, Diary> $diaries
+ * @property-read Collection<int, Media> $media
+ * @property-read Collection<int, Membership> $memberships
  */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]

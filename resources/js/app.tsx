@@ -12,6 +12,8 @@ void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
+            // Social pages render their own layout inside the page component.
+            case name.startsWith('social/'):
             case name === 'welcome':
                 return null;
             case name.startsWith('auth/'):
