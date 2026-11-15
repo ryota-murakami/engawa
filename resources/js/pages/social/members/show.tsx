@@ -35,7 +35,7 @@ export default function Member({
                     <Avatar user={member} large />
                     <div className="min-w-0 flex-1 space-y-3">
                         <h2 className="text-xl font-bold">{member.name}</h2>
-                        <p className="text-sm leading-7 break-words whitespace-pre-wrap">
+                        <p className="text-sm leading-7 wrap-break-word whitespace-pre-wrap">
                             {member.bio || '自己紹介はまだありません。'}
                         </p>
                     </div>
