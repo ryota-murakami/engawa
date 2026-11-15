@@ -173,13 +173,15 @@ export function Avatar({
     );
 }
 
-/** Render an author before member profile routes are introduced in chapter 8. */
 export function MemberLink({ user }: { user: UserCard }) {
     return (
-        <span className="inline-flex items-center gap-3">
+        <Link
+            href={`/members/${user.id}`}
+            className="inline-flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-orange-700"
+        >
             <Avatar user={user} />
-            <span>{user.name}</span>
-        </span>
+            <span className={textLinkClass}>{user.name}</span>
+        </Link>
     );
 }
 
