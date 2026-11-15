@@ -1,0 +1,88 @@
+import { useForm } from '@inertiajs/react';
+import SocialLayout from '@/components/social/social-layout';
+import {
+    buttonClass,
+    Field,
+    FormErrors,
+    inputClass,
+    Section,
+} from '@/components/social/ui';
+
+type Profile = {
+    name: string;
+    bio: string | null;
+    avatar_url: string | null;
+};
+
+export default function EditProfile({ profile }: { profile: Profile }) {
+    const form = useForm({
+        name: profile.name,
+        bio: profile.bio ?? '',
+    });
+    return (
+        <SocialLayout
+            title="プロフィール設定"
+            description="表示名と自己紹介は、プロフィールを見られる会員に表示されます。"
+        >
+            <Section title="基本情報">
+                <form
+                    className="space-y-5"
+                    onSubmit={(event) => {
+                        event.preventDefault();
+                        form.patch('/profile', { preserveScroll: true });
+                    }}
+                >
+                    <Field
+                        id="profile-name"
+                        label="表示名"
+                        error={form.errors.name}
+                    >
+                        <input
+                            id="profile-name"
+                            autoComplete="nickname"
+                            value={form.data.name}
+                            onChange={(event) =>
+                                form.setData('name', event.target.value)
+                            }
+                            maxLength={255}
+                            required
+                            className={inputClass}
+                            aria-invalid={Boolean(form.errors.name)}
+                        />
+                    </Field>
+                    <Field
+                        id="profile-bio"
+                        label="自己紹介"
+                        error={form.errors.bio}
+                        hint="2,000 文字まで。"
+                    >
+                        <textarea
+                            id="profile-bio"
+                            value={form.data.bio}
+                            onChange={(event) =>
+                                form.setData('bio', event.target.value)
+                            }
+                            maxLength={2000}
+                            rows={6}
+                            className={inputClass}
+                            aria-invalid={Boolean(form.errors.bio)}
+                        />
+                    </Field>
+                    <FormErrors errors={form.errors} />
+                    <button
+                        className={buttonClass}
+                        disabled={form.processing}
+                        type="submit"
+                    >
+                        {form.processing ? '保存中…' : '変更を保存'}
+                    </button>
+                    {form.recentlySuccessful && (
+                        <p role="status" className="text-sm text-green-800">
+                            プロフィールを保存しました。
+                        </p>
+                    )}
+                </form>
+            </Section>
+        </SocialLayout>
+    );
+}
