@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Social\CommentController;
 use App\Http\Controllers\Social\DiaryController;
 use App\Http\Controllers\Social\FriendController;
 use App\Http\Controllers\Social\HomeController;
@@ -20,6 +21,8 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
     Route::get('/diaries/{diary}/edit', [DiaryController::class, 'edit'])->name('diaries.edit');
     Route::patch('/diaries/{diary}', [DiaryController::class, 'update'])->middleware('throttle:30,1,social-write')->name('diaries.update');
     Route::delete('/diaries/{diary}', [DiaryController::class, 'destroy'])->name('diaries.destroy');
+    Route::post('/diaries/{diary}/comments', [CommentController::class, 'store'])->middleware('throttle:20,1,social-comments')->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     Route::get('/friends', [FriendController::class, 'index'])->name('friends');
     Route::post('/members/{user}/friend-request', [FriendController::class, 'store'])->middleware('throttle:10,1,social-friends')->name('friends.store');
