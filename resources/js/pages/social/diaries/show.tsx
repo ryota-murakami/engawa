@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import CommentThread from '@/components/social/comment-thread';
 import SocialLayout from '@/components/social/social-layout';
 import {
     ActionButton,
@@ -8,9 +9,17 @@ import {
     secondaryClass,
     visibilityLabels,
 } from '@/components/social/ui';
-import type { DiaryCard } from '@/types/social';
+import type { CommentCard, DiaryCard, Paginator } from '@/types/social';
 
-export default function Diary({ diary }: { diary: DiaryCard }) {
+export default function Diary({
+    diary,
+    comments,
+    can_comment,
+}: {
+    diary: DiaryCard;
+    comments: Paginator<CommentCard>;
+    can_comment: boolean;
+}) {
     return (
         <SocialLayout title={diary.title}>
             <Section title="日記">
@@ -21,7 +30,7 @@ export default function Diary({ diary }: { diary: DiaryCard }) {
                 <p className="text-xs text-stone-600">
                     公開範囲：{visibilityLabels[diary.visibility]}
                 </p>
-                <p className="leading-8 break-words whitespace-pre-wrap">
+                <p className="leading-8 wrap-break-word whitespace-pre-wrap">
                     {diary.body}
                 </p>
                 {diary.can_update && (
@@ -42,6 +51,15 @@ export default function Diary({ diary }: { diary: DiaryCard }) {
                         </ActionButton>
                     </div>
                 )}
+            </Section>
+            <Section title={`コメント (${comments.total})`}>
+                <CommentThread
+                    key={diary.id}
+                    comments={comments}
+                    postUrl={`/diaries/${diary.id}/comments`}
+                    deletePrefix="/comments"
+                    canPost={can_comment}
+                />
             </Section>
         </SocialLayout>
     );
