@@ -36,7 +36,7 @@ export default function DiaryList({
                             {diary.title}
                         </Link>
                     </h3>
-                    <p className="line-clamp-3 text-sm leading-7 break-words whitespace-pre-wrap text-stone-700">
+                    <p className="line-clamp-3 text-sm leading-7 wrap-break-word whitespace-pre-wrap text-stone-700">
                         {diary.body}
                     </p>
                     <p className="text-xs text-stone-500">
