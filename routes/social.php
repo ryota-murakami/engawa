@@ -31,5 +31,4 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
     Route::post('/members/{user}/block', [FriendController::class, 'block'])->middleware('throttle:30,1,social-blocks')->name('blocks.store');
     Route::delete('/members/{user}/block', [FriendController::class, 'unblock'])->name('blocks.destroy');
 
-
 });
