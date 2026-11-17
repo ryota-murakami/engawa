@@ -15,6 +15,9 @@ use Throwable;
 
 class MediaStorage
 {
+    /**
+     * @throws Throwable
+     */
     public function store(UploadedFile $file, User $user, ?Diary $diary = null): Media
     {
         $diskName = (string) config('social.media_disk', 'local');
