@@ -1,6 +1,8 @@
 import { useForm } from '@inertiajs/react';
+import ImageUpload from '@/components/social/image-upload';
 import SocialLayout from '@/components/social/social-layout';
 import {
+    Avatar,
     buttonClass,
     Field,
     FormErrors,
@@ -82,6 +84,17 @@ export default function EditProfile({ profile }: { profile: Profile }) {
                         </p>
                     )}
                 </form>
+            </Section>
+            <Section title="プロフィール画像">
+                <Avatar user={profile} large />
+                <p className="text-sm text-stone-600">
+                    新しい画像をアップロードすると、現在の画像を置き換えます。
+                </p>
+                <ImageUpload
+                    url="/profile/avatar"
+                    field="avatar"
+                    label="新しいプロフィール画像"
+                />
             </Section>
         </SocialLayout>
     );
