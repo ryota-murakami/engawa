@@ -11,13 +11,14 @@ use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use RuntimeException;
 
 class SocialDemoSeeder extends Seeder
 {
     public function run(): void
     {
         if (! app()->environment(['local', 'testing'])) {
-            throw new \RuntimeException('デモ会員はlocal/testingでだけ作成できます。');
+            throw new RuntimeException('デモ会員はlocal/testingでだけ作成できます。');
         }
 
         $users = [];

@@ -16,7 +16,7 @@ class Block extends Model
     }
 
     /** @return BelongsTo<User, $this> */
-    public function blockUser(): BelongsTo
+    public function blockedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'blocked_id');
     }

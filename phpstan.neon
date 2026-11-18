@@ -1,6 +1,8 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
     paths:
@@ -11,3 +13,26 @@ parameters:
         - routes/
 
     level: 7
+
+    # PhpStorm の「未使用 / 冗長」系 Inspection 相当
+    reportUnmatchedIgnoredErrors: true
+    reportMaybesInMethodSignatures: true
+    reportMaybesInPropertyPhpDocTypes: true
+    reportStaticMethodSignatures: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkMissingCallableSignature: true
+    checkBenevolentUnionTypes: true
+
+    # strict-rules は Laravel の書き方と衝突する項目が多いため、有用なものだけ有効化
+    strictRules:
+        allRules: false
+        disallowedLooseComparison: true
+        disallowedBacktick: true
+        disallowedImplicitArrayCreation: true
+        overwriteVariablesWithLoop: true
+        closureUsesThis: true
+        matchingInheritedMethodNames: true
+        requireParentConstructorCall: true
+        switchConditionsMatchingType: true
+        illegalConstructorMethodCall: true
