@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Social;
 use App\Http\Controllers\Controller;
 use App\Models\Diary;
 use App\Models\DiaryComment;
+use App\Models\Media;
+use App\Services\MediaStorage;
 use App\Services\SocialGraph;
 use App\Support\SocialData;
 use Illuminate\Http\RedirectResponse;
@@ -79,13 +81,14 @@ class DiaryController extends Controller
         return to_route('social.diaries.show', $diary, 303);
     }
 
-    public function destroy(Diary $diary): RedirectResponse
+    public function destroy(Diary $diary, MediaStorage $storage): RedirectResponse
     {
         Gate::authorize('delete', $diary);
 
-        DB::transaction(function () use ($diary): void {
+        DB::transaction(function () use ($diary, $storage): void {
             $current = Diary::query()->lockForUpdate()->findOrFail($diary->id);
             Gate::authorize('delete', $current);
+            $current->images()->get()->each(fn (Media $media) => $storage->delete($media));
             $current->delete();
         }, 3);
 
