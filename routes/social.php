@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Social\CommentController;
+use App\Http\Controllers\Social\CommunityController;
 use App\Http\Controllers\Social\DiaryController;
 use App\Http\Controllers\Social\FriendController;
 use App\Http\Controllers\Social\HomeController;
 use App\Http\Controllers\Social\MemberController;
 use App\Http\Controllers\Social\ProfileController;
+use App\Http\Controllers\Social\TopicController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->name('social.')->group(function (): void {
@@ -38,5 +40,18 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
     Route::post('/members/{user}/block', [FriendController::class, 'block'])->middleware('throttle:30,1,social-blocks')->name('blocks.store');
     Route::delete('/members/{user}/block', [FriendController::class, 'unblock'])->name('blocks.destroy');
 
+    Route::get('/communities', [CommunityController::class, 'index'])->name('communities.index');
+    Route::get('/communities/create', [CommunityController::class, 'create'])->name('communities.create');
+    Route::post('/communities', [CommunityController::class, 'store'])->middleware('throttle:10,1,social-communities')->name('communities.store');
+    Route::get('/communities/{community}', [CommunityController::class, 'show'])->name('communities.show');
+    Route::post('/communities/{community}/join', [CommunityController::class, 'join'])->middleware('throttle:20,1,social-communities')->name('communities.join');
+    Route::delete('/communities/{community}/membership', [CommunityController::class, 'leave'])->name('communities.leave');
+    Route::delete('/communities/{community}', [CommunityController::class, 'destroy'])->name('communities.destroy');
+    Route::get('/communities/{community}/topics/create', [TopicController::class, 'create'])->name('topics.create');
+    Route::post('/communities/{community}/topics', [TopicController::class, 'store'])->middleware('throttle:20,1,social-topics')->name('topics.store');
+    Route::get('/topics/{topic}', [TopicController::class, 'show'])->name('topics.show');
+    Route::delete('/topics/{topic}', [TopicController::class, 'destroy'])->name('topics.destroy');
+    Route::post('/topics/{topic}/replies', [TopicController::class, 'reply'])->middleware('throttle:20,1,social-replies')->name('replies.store');
+    Route::delete('/replies/{reply}', [TopicController::class, 'deleteReply'])->name('replies.destroy');
 
 });
