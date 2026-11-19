@@ -59,6 +59,7 @@ export default defineConfig({
         htmlWhitespaceSensitivity: 'css',
         ignorePatterns: [
             '.github/**',
+            '.serena/**',
             'composer.json',
             'resources/js/components/ui/*',
             'resources/views/mail/*',
@@ -67,5 +68,10 @@ export default defineConfig({
             functions: ['clsx', 'cn', 'cva'],
             stylesheet: 'resources/css/app.css',
         },
+    },
+    // Run by .vite-hooks/pre-commit (`vp staged`) on the staged files of each commit
+    staged: {
+        '*.{js,jsx,ts,tsx,css,md,json,yaml,yml}': 'vp check --fix',
+        '*.php': 'vendor/bin/pint',
     },
 });
