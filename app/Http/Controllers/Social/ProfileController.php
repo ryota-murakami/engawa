@@ -19,6 +19,7 @@ class ProfileController extends Controller
                 'name' => $user->name,
                 'bio' => $user->bio ?? '',
                 'avatar_url' => $user->publicCard()['avatar_url'],
+                'email_social_notifications' => (bool) $user->email_social_notifications,
             ],
         ]);
     }
@@ -28,11 +29,13 @@ class ProfileController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'bio' => ['nullable', 'string', 'max:2000'],
+            'email_social_notifications' => ['required', 'boolean'],
         ]);
 
         $request->user()->forceFill([
             'name' => $data['name'],
             'bio' => $data['bio'] ?? null,
+            'email_social_notifications' => (bool) $data['email_social_notifications'],
         ])->save();
 
         return back(303);

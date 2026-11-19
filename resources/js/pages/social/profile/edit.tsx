@@ -14,12 +14,14 @@ type Profile = {
     name: string;
     bio: string | null;
     avatar_url: string | null;
+    email_social_notifications: boolean;
 };
 
 export default function EditProfile({ profile }: { profile: Profile }) {
     const form = useForm({
         name: profile.name,
         bio: profile.bio ?? '',
+        email_social_notifications: profile.email_social_notifications,
     });
     return (
         <SocialLayout
@@ -70,6 +72,23 @@ export default function EditProfile({ profile }: { profile: Profile }) {
                             aria-invalid={Boolean(form.errors.bio)}
                         />
                     </Field>
+                    <label className="flex items-start gap-3 text-sm leading-6">
+                        <input
+                            type="checkbox"
+                            className="mt-1 h-4 w-4 accent-orange-700"
+                            checked={form.data.email_social_notifications}
+                            onChange={(event) =>
+                                form.setData(
+                                    'email_social_notifications',
+                                    event.target.checked,
+                                )
+                            }
+                        />
+                        マイミク申請やコメントのお知らせをメールでも受け取る
+                    </label>
+                    <p className="text-xs leading-6 text-stone-600">
+                        会員登録の認証とパスワード再設定のメールは、この設定にかかわらず送信されます。
+                    </p>
                     <FormErrors errors={form.errors} />
                     <button
                         className={buttonClass}

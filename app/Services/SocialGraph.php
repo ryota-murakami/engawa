@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\NotifySocialActivity;
 use App\Models\Block;
 use App\Models\Friendship;
 use App\Models\User;
@@ -98,6 +99,8 @@ class SocialGraph
                 'status' => 'pending',
             ]);
 
+            NotifySocialActivity::dispatch($target->id, $actor->id, 'friend-request', $friendship->id)->afterCommit();
+
             return $friendship;
         });
     }
@@ -117,6 +120,7 @@ class SocialGraph
             }
 
             $current->update(['status' => 'accepted']);
+            NotifySocialActivity::dispatch($target->id, $actor->id, 'friend-accepted', $current->id)->afterCommit();
         });
     }
 

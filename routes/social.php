@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Social\CommentController;
 use App\Http\Controllers\Social\CommunityController;
 use App\Http\Controllers\Social\DiaryController;
@@ -57,4 +58,6 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
 
     Route::post('/members/{user}/footprint', [FootprintController::class, 'store'])->middleware('throttle:60,1,social-footprints')->name('footprints.store');
     Route::get('/footprints', [FootprintController::class, 'index'])->name('footprints.index');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::patch('/notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Social;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\NotifySocialActivity;
 use App\Models\Diary;
 use App\Models\DiaryComment;
 use App\Services\SocialGraph;
@@ -21,8 +22,11 @@ class CommentController extends Controller
         $graph->withLockedPair($actor, $diary->author ?? abort(404), function () use ($actor, $diary, $data): void {
             $current = Diary::query()->lockForUpdate()->findOrFail($diary->id);
             Gate::authorize('view', $current);
-            $current->comments()->create(['user_id' => $actor->id, 'body' => $data['body']]);
+            $comment = $current->comments()->create(['user_id' => $actor->id, 'body' => $data['body']]);
 
+            if ((int) $current->user_id !== $actor->id) {
+                NotifySocialActivity::dispatch((int) $current->user_id, $actor->id, 'diary-comment', $comment->id)->afterCommit();
+            }
         });
 
         return back(303);

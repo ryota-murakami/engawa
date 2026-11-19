@@ -5,5 +5,6 @@ export const socialNavigation = [
     ['/friends', 'マイミク'],
     ['/communities', 'コミュニティ'],
     ['/footprints', '足あと'],
+    ['/notifications', 'お知らせ'],
     ['/profile/edit', 'プロフィール設定'],
 ] as const;
