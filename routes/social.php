@@ -4,6 +4,7 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Social\CommentController;
 use App\Http\Controllers\Social\CommunityController;
 use App\Http\Controllers\Social\DiaryController;
+use App\Http\Controllers\Social\FootprintController;
 use App\Http\Controllers\Social\FriendController;
 use App\Http\Controllers\Social\HomeController;
 use App\Http\Controllers\Social\MemberController;
@@ -54,4 +55,6 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
     Route::post('/topics/{topic}/replies', [TopicController::class, 'reply'])->middleware('throttle:20,1,social-replies')->name('replies.store');
     Route::delete('/replies/{reply}', [TopicController::class, 'deleteReply'])->name('replies.destroy');
 
+    Route::post('/members/{user}/footprint', [FootprintController::class, 'store'])->middleware('throttle:60,1,social-footprints')->name('footprints.store');
+    Route::get('/footprints', [FootprintController::class, 'index'])->name('footprints.index');
 });

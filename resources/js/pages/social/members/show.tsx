@@ -1,4 +1,5 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { useEffect, useRef } from 'react';
 import DiaryList from '@/components/social/diary-list';
 import SocialLayout from '@/components/social/social-layout';
 import {
@@ -28,6 +29,23 @@ export default function Member({
 }) {
     const props = usePage().props as unknown as SocialSharedProps;
     const userId = props.auth?.user?.id;
+    const recordedId = useRef<number | null>(null);
+    useEffect(() => {
+        // GET・prefetchでは記録しない。実際の画面mount後だけ明示的にPOSTする。
+        // React StrictModeでeffectが再実行されても同じ訪問を二重送信しない。
+        if (is_self || recordedId.current === member.id) return;
+        recordedId.current = member.id;
+        router.post(
+            `/members/${member.id}/footprint`,
+            {},
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+                showProgress: false,
+            },
+        );
+    }, [is_self, member.id]);
     return (
         <SocialLayout title={`${member.name} さんのページ`}>
             <Section title="プロフィール">
@@ -35,7 +53,7 @@ export default function Member({
                     <Avatar user={member} large />
                     <div className="min-w-0 flex-1 space-y-3">
                         <h2 className="text-xl font-bold">{member.name}</h2>
-                        <p className="text-sm leading-7 wrap-break-word whitespace-pre-wrap">
+                        <p className="text-sm leading-7 break-words whitespace-pre-wrap">
                             {member.bio || '自己紹介はまだありません。'}
                         </p>
                     </div>
@@ -108,6 +126,11 @@ export default function Member({
                             ブロックする
                         </ActionButton>
                     </div>
+                )}
+                {!is_self && (
+                    <p className="text-xs leading-6 text-stone-500">
+                        このページを開くと、相手に足あとが記録されます（30日間保持）。
+                    </p>
                 )}
             </Section>
             <Section title="日記">
