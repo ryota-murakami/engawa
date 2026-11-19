@@ -13,6 +13,32 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
+    # Migrations add CHECK constraints SQLite cannot, so CI uses the same PostgreSQL as
+    # compose.yaml and the test database phpunit.xml forces (engawa_test on port 55432)
+    services:
+      postgres:
+        image: postgres:18.6
+        env:
+          POSTGRES_DB: engawa_test
+          POSTGRES_USER: engawa
+          POSTGRES_PASSWORD: engawa-local-only
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U engawa -d engawa_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    # Real environment variables win over the .env that `composer setup` copies from .env.example
+    env:
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 55432
+      DB_DATABASE: engawa_test
+      DB_USERNAME: engawa
+      DB_PASSWORD: engawa-local-only
+
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -23,8 +49,12 @@ jobs:
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
         with:
           php-version: '8.5'
+          extensions: pdo_pgsql, gd
           tools: composer:v2
           coverage: none
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
 
       - name: Setup Node
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
