@@ -10,6 +10,7 @@ use App\Http\Controllers\Social\FriendController;
 use App\Http\Controllers\Social\HomeController;
 use App\Http\Controllers\Social\MemberController;
 use App\Http\Controllers\Social\ProfileController;
+use App\Http\Controllers\Social\SearchController;
 use App\Http\Controllers\Social\TopicController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,4 +61,5 @@ Route::middleware(['auth', 'verified'])->name('social.')->group(function (): voi
     Route::get('/footprints', [FootprintController::class, 'index'])->name('footprints.index');
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'read'])->name('notifications.read');
+    Route::get('/search', SearchController::class)->middleware('throttle:60,1,social-search')->name('search');
 });
