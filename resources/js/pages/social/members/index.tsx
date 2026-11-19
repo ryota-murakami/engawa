@@ -1,17 +1,17 @@
-import SocialLayout from '@/components/social/social-layout'
+import SocialLayout from '@/components/social/social-layout';
 import {
     Empty,
     MemberLink,
     Pagination,
     SearchForm,
-    Section
-} from '@/components/social/ui'
-import type { Paginator, UserCard } from '@/types/social'
+    Section,
+} from '@/components/social/ui';
+import type { Paginator, UserCard } from '@/types/social';
 
 export default function Members({
-                                    members,
-                                    q
-                                }: {
+    members,
+    q,
+}: {
     members: Paginator<UserCard>;
     q: string;
 }) {
@@ -35,12 +35,12 @@ export default function Members({
                 <ul className="grid gap-5 sm:grid-cols-2">
                     {members.data.map((member) => (
                         <li key={member.id}>
-                            <MemberLink user={member}/>
+                            <MemberLink user={member} />
                         </li>
                     ))}
                 </ul>
-                <Pagination page={members}/>
+                <Pagination page={members} />
             </Section>
         </SocialLayout>
-    )
+    );
 }

@@ -13,10 +13,10 @@ import {
 import type { CommentCard, DiaryCard, Paginator } from '@/types/social';
 
 export default function Diary({
-                                  diary,
-                                  comments,
-                                  can_comment,
-                              }: {
+    diary,
+    comments,
+    can_comment,
+}: {
     diary: DiaryCard;
     comments: Paginator<CommentCard>;
     can_comment: boolean;

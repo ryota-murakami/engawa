@@ -104,7 +104,7 @@ export default function Friends({
                         >
                             ブロックを解除
                         </ActionButton>
-                   </div>
+                    </div>
                 ))}
                 {blocked.length > 0 && (
                     <p className="text-xs text-stone-500">

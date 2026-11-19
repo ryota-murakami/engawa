@@ -54,10 +54,10 @@ pnpm run dev                                     # Vite 開発サーバー
 php artisan queue:work --tries=3 --timeout=60    # キューワーカー
 ```
 
-| URL | 用途 |
-| --- | --- |
-| http://localhost:8000 | アプリ本体 |
-| http://localhost:8025 | Mailpit（送信メールの確認） |
+| URL                   | 用途                                |
+| --------------------- | ----------------------------------- |
+| http://localhost:8000 | アプリ本体                          |
+| http://localhost:8025 | Mailpit（送信メールの確認）         |
 | http://localhost:5173 | Vite 開発サーバー（直接は開かない） |
 
 ## 停止
@@ -107,11 +107,11 @@ pnpm run build                # 本番ビルド
 
 `SocialDemoSeeder` で作成されるデモ会員（local / testing 環境のみ実行可）:
 
-| メール | パスワード | 役割 |
-| --- | --- | --- |
+| メール             | パスワード                 | 役割                                                 |
+| ------------------ | -------------------------- | ---------------------------------------------------- |
 | alice@example.test | `LocalDemo-ChangeMe-2026!` | アリス（コミュニティ owner、ボブとフレンド承認済み） |
-| bob@example.test | `LocalDemo-ChangeMe-2026!` | ボブ（アリスとフレンド承認済み） |
-| carol@example.test | `LocalDemo-ChangeMe-2026!` | キャロル（未接続） |
+| bob@example.test   | `LocalDemo-ChangeMe-2026!` | ボブ（アリスとフレンド承認済み）                     |
+| carol@example.test | `LocalDemo-ChangeMe-2026!` | キャロル（未接続）                                   |
 
 ```bash
 php artisan db:seed --class=SocialDemoSeeder

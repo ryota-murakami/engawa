@@ -1,5 +1,5 @@
-import { useForm } from '@inertiajs/react'
-import type { CommentCard, Paginator } from '@/types/social'
+import { useForm } from '@inertiajs/react';
+import type { CommentCard, Paginator } from '@/types/social';
 import {
     ActionButton,
     buttonClass,
@@ -9,23 +9,23 @@ import {
     FormErrors,
     inputClass,
     MemberLink,
-    Pagination
-} from './ui'
+    Pagination,
+} from './ui';
 
 export default function CommentThread({
-                                          comments,
-                                          postUrl,
-                                          deletePrefix,
-                                          canPost,
-                                          noun = 'コメント'
-                                      }: {
+    comments,
+    postUrl,
+    deletePrefix,
+    canPost,
+    noun = 'コメント',
+}: {
     comments: Paginator<CommentCard>;
     postUrl: string;
     deletePrefix: string;
     canPost: boolean;
     noun?: string;
 }) {
-    const form = useForm({ body: '' })
+    const form = useForm({ body: '' });
     return (
         <div className="space-y-6">
             {!comments.data.length && <Empty>まだ{noun}はありません。</Empty>}
@@ -35,8 +35,8 @@ export default function CommentThread({
                     className="space-y-3 border-b border-stone-100 pb-4"
                 >
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <MemberLink user={comment.author}/>
-                        <DateTime value={comment.created_at}/>
+                        <MemberLink user={comment.author} />
+                        <DateTime value={comment.created_at} />
                     </div>
                     <p className="text-sm leading-7 wrap-break-word whitespace-pre-wrap">
                         {comment.body}
@@ -53,16 +53,16 @@ export default function CommentThread({
                     )}
                 </article>
             ))}
-            <Pagination page={comments}/>
+            <Pagination page={comments} />
             {canPost ? (
                 <form
                     className="space-y-4"
                     onSubmit={(event) => {
-                        event.preventDefault()
+                        event.preventDefault();
                         form.post(postUrl, {
                             preserveScroll: true,
-                            onSuccess: () => form.reset('body')
-                        })
+                            onSuccess: () => form.reset('body'),
+                        });
                     }}
                 >
                     <Field
@@ -85,7 +85,7 @@ export default function CommentThread({
                             aria-describedby="comment-body-hint comment-body-error"
                         />
                     </Field>
-                    <FormErrors errors={form.errors}/>
+                    <FormErrors errors={form.errors} />
                     <button
                         type="submit"
                         disabled={form.processing}
@@ -105,5 +105,5 @@ export default function CommentThread({
                 </p>
             )}
         </div>
-    )
+    );
 }

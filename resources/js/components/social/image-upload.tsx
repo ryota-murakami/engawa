@@ -3,10 +3,10 @@ import { useRef } from 'react';
 import { buttonClass, Field, FormErrors, inputClass } from './ui';
 
 export default function ImageUpload({
-                                        url,
-                                        field,
-                                        label,
-                                    }: {
+    url,
+    field,
+    label,
+}: {
     url: string;
     field: 'image' | 'avatar';
     label: string;
