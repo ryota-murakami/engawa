@@ -229,11 +229,11 @@ class ActivityEngine
                 if ($theme === 'love' && $persona->age < 18) {
                     continue;
                 }
-                $weight = $e['w'] ?? 5;
-                // Event-matched templates get a strong boost on their sim days.
-                if (isset($e['k']) && array_intersect($e['k'], $eventKeys) !== []) {
-                    $weight *= 8;
+                // Event-keyed templates (季節・ニュース) only appear while that event is live.
+                if (isset($e['k']) && array_intersect($e['k'], $eventKeys) === []) {
+                    continue;
                 }
+                $weight = ($e['w'] ?? 5) * (isset($e['k']) ? 8 : 1);
                 // First diary for a fresh persona should be an intro.
                 if ($theme === 'intro' && $this->hasDiaries($persona)) {
                     continue;

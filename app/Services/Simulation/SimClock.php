@@ -87,9 +87,14 @@ class SimClock
         return $this->simStart->addSeconds((int) round($simSeconds * $elapsed / $realSeconds));
     }
 
-    /** A timestamp slightly behind sim-now for organic-looking posting times. */
+    /**
+     * A timestamp slightly behind sim-now for organic-looking posting times.
+     * Clamped to sim_start so generated content never leaves the 2006 window.
+     */
     public function recentAt(int $maxBackMinutes = 40): CarbonImmutable
     {
-        return $this->now()->subMinutes(random_int(0, $maxBackMinutes));
+        $at = $this->now()->subMinutes(random_int(0, $maxBackMinutes));
+
+        return $at->lt($this->simStart) ? $this->simStart : $at;
     }
 }
