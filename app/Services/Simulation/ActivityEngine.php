@@ -97,6 +97,14 @@ class ActivityEngine
         $done = 0;
         foreach (self::BUDGET as $action => $base) {
             $n = (int) max(0, round($base * $scale * (random_int(70, 130) / 100)));
+            // Even at 3 a.m. mixi had its night owls — keep a floor of visible activity.
+            $n = match ($action) {
+                'diary' => max($n, random_int(1, 2)),
+                'comment' => max($n, random_int(1, 3)),
+                'footprint' => max($n, random_int(2, 4)),
+                'friendship', 'membership' => max($n, random_int(0, 1)),
+                default => $n,
+            };
             $stats[$action] = 0;
             for ($i = 0; $i < $n; $i++) {
                 $persona = $this->pickActivePersona();
