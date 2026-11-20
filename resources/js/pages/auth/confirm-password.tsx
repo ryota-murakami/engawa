@@ -1,56 +1,60 @@
 import { Form, Head } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import PasskeyVerify from '@/components/passkey-verify';
+import { buttonClass, inputClass } from '@/components/social/ui';
 import { store } from '@/routes/password/confirm';
 import {
     index as confirmOptions,
     store as confirmStore,
 } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController';
-import PasskeyVerify from '@/components/passkey-verify';
 
 export default function ConfirmPassword() {
     return (
         <>
-            <Head title="Confirm password" />
+            <Head title="パスワードの確認" />
 
             <PasskeyVerify
                 routes={{
                     options: confirmOptions(),
                     submit: confirmStore(),
                 }}
-                label="Confirm with passkey"
-                loadingLabel="Confirming..."
-                separator="Or confirm with password"
+                label="パスキーで確認"
+                loadingLabel="確認中…"
+                separator="またはパスワードで確認"
             />
 
             <Form {...store.form()} resetOnSuccess={['password']}>
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <label
+                                htmlFor="password"
+                                className="text-sm font-semibold"
+                            >
+                                パスワード
+                            </label>
                             <PasswordInput
                                 id="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="パスワード"
                                 autoComplete="current-password"
                                 autoFocus
+                                className={inputClass}
                             />
 
                             <InputError message={errors.password} />
                         </div>
 
                         <div className="flex items-center">
-                            <Button
-                                className="w-full"
+                            <button
+                                type="submit"
+                                className={`${buttonClass} w-full`}
                                 disabled={processing}
                                 data-test="confirm-password-button"
                             >
-                                {processing && <Spinner />}
-                                Confirm password
-                            </Button>
+                                {processing ? '確認中…' : '確認する'}
+                            </button>
                         </div>
                     </div>
                 )}
@@ -60,7 +64,6 @@ export default function ConfirmPassword() {
 }
 
 ConfirmPassword.layout = {
-    title: 'Confirm password',
-    description:
-        'This is a secure area of the application. Please confirm your password before continuing.',
+    title: 'パスワードの確認',
+    description: '安全のため、続ける前にパスワードをもう一度入力してください。',
 };

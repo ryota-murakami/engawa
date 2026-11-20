@@ -2,8 +2,7 @@ import { Form, Head, setLayoutProps } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { useMemo, useState } from 'react';
 import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { buttonClass, inputClass } from '@/components/social/ui';
 import {
     InputOTP,
     InputOTPGroup,
@@ -23,18 +22,17 @@ export default function TwoFactorChallenge() {
     }>(() => {
         if (showRecoveryInput) {
             return {
-                title: 'Recovery code',
+                title: 'リカバリーコード',
                 description:
-                    'Please confirm access to your account by entering one of your emergency recovery codes.',
-                toggleText: 'login using an authentication code',
+                    '緊急用のリカバリーコードを入力してログインしてください。',
+                toggleText: '認証コードでログインする',
             };
         }
 
         return {
-            title: 'Authentication code',
-            description:
-                'Enter the authentication code provided by your authenticator application.',
-            toggleText: 'login using a recovery code',
+            title: '認証コード',
+            description: '認証アプリに表示されたコードを入力してください。',
+            toggleText: 'リカバリーコードでログインする',
         };
     }, [showRecoveryInput]);
 
@@ -51,7 +49,7 @@ export default function TwoFactorChallenge() {
 
     return (
         <>
-            <Head title="Two-factor authentication" />
+            <Head title="二段階認証" />
 
             <div className="space-y-6">
                 <Form
@@ -64,12 +62,13 @@ export default function TwoFactorChallenge() {
                         <>
                             {showRecoveryInput ? (
                                 <>
-                                    <Input
+                                    <input
                                         name="recovery_code"
                                         type="text"
-                                        placeholder="Enter recovery code"
+                                        placeholder="リカバリーコードを入力"
                                         autoFocus={showRecoveryInput}
                                         required
+                                        className={inputClass}
                                     />
                                     <InputError
                                         message={errors.recovery_code}
@@ -104,19 +103,19 @@ export default function TwoFactorChallenge() {
                                 </div>
                             )}
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="w-full"
+                                className={`${buttonClass} w-full`}
                                 disabled={processing}
                             >
-                                Continue
-                            </Button>
+                                {processing ? '確認中…' : '次へ'}
+                            </button>
 
-                            <div className="text-center text-sm text-muted-foreground">
-                                <span>or you can </span>
+                            <div className="text-center text-sm text-stone-600">
+                                <span>または </span>
                                 <button
                                     type="button"
-                                    className="cursor-pointer text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                    className="cursor-pointer font-medium text-orange-800 underline decoration-orange-300 underline-offset-4 hover:text-orange-950"
                                     onClick={() =>
                                         toggleRecoveryMode(clearErrors)
                                     }

@@ -1,16 +1,11 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import PasskeyVerify from '@/components/passkey-verify';
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import PasskeyVerify from '@/components/passkey-verify';
 
 type Props = {
     status?: string;
@@ -20,9 +15,13 @@ type Props = {
 export default function Login({ status, canResetPassword }: Props) {
     return (
         <>
-            <Head title="Log in" />
+            <Head title="ログイン" />
 
-            <PasskeyVerify />
+            <PasskeyVerify
+                label="パスキーでログイン"
+                loadingLabel="認証中…"
+                separator="またはメールアドレスでログイン"
+            />
 
             <Form
                 {...store.form()}
@@ -31,10 +30,15 @@ export default function Login({ status, canResetPassword }: Props) {
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-6">
+                        <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
+                                <label
+                                    htmlFor="email"
+                                    className="text-sm font-semibold"
+                                >
+                                    メールアドレス
+                                </label>
+                                <input
                                     id="email"
                                     type="email"
                                     name="email"
@@ -43,21 +47,27 @@ export default function Login({ status, canResetPassword }: Props) {
                                     tabIndex={1}
                                     autoComplete="email"
                                     placeholder="email@example.com"
+                                    className={inputClass}
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <label
+                                        htmlFor="password"
+                                        className="text-sm font-semibold"
+                                    >
+                                        パスワード
+                                    </label>
                                     {canResetPassword && (
-                                        <TextLink
+                                        <Link
                                             href={request()}
-                                            className="ml-auto text-sm"
+                                            className={`${textLinkClass} ml-auto text-sm`}
                                             tabIndex={5}
                                         >
-                                            Forgot your password?
-                                        </TextLink>
+                                            パスワードを忘れた方はこちら
+                                        </Link>
                                     )}
                                 </div>
                                 <PasswordInput
@@ -66,44 +76,52 @@ export default function Login({ status, canResetPassword }: Props) {
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder="Password"
+                                    placeholder="パスワード"
+                                    className={inputClass}
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
-                            <div className="flex items-center space-x-3">
-                                <Checkbox
+                            <div className="flex items-center space-x-2">
+                                <input
                                     id="remember"
+                                    type="checkbox"
                                     name="remember"
                                     tabIndex={3}
+                                    className="h-4 w-4 rounded border-stone-300 accent-orange-700"
                                 />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <label htmlFor="remember" className="text-sm">
+                                    ログイン状態を保持する
+                                </label>
                             </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className={`${buttonClass} mt-2 w-full`}
                                 tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
                             >
-                                {processing && <Spinner />}
-                                Log in
-                            </Button>
+                                {processing ? 'ログイン中…' : 'ログイン'}
+                            </button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink href={register()} tabIndex={5}>
-                                Sign up
-                            </TextLink>
+                        <div className="text-center text-sm text-stone-600">
+                            アカウントをお持ちでない方は{' '}
+                            <Link
+                                href={register()}
+                                className={textLinkClass}
+                                tabIndex={5}
+                            >
+                                新規登録
+                            </Link>
                         </div>
                     </>
                 )}
             </Form>
 
             {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
+                <div className="mt-4 text-center text-sm font-medium text-green-600">
                     {status}
                 </div>
             )}
@@ -112,6 +130,6 @@ export default function Login({ status, canResetPassword }: Props) {
 }
 
 Login.layout = {
-    title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
+    title: 'ログイン',
+    description: 'メールアドレスとパスワードを入力してログインしてください。',
 };

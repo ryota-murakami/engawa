@@ -1,37 +1,36 @@
-// Components
-import { Form, Head } from '@inertiajs/react';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
+import { Form, Head, Link } from '@inertiajs/react';
+import { secondaryClass, textLinkClass } from '@/components/social/ui';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
 
 export default function VerifyEmail({ status }: { status?: string }) {
     return (
         <>
-            <Head title="Email verification" />
+            <Head title="メールアドレスの確認" />
 
             {status === 'verification-link-sent' && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
+                    確認用のリンクを再送しました。メールをご確認ください。
                 </div>
             )}
 
             <Form {...send.form()} className="space-y-6 text-center">
                 {({ processing }) => (
                     <>
-                        <Button disabled={processing} variant="secondary">
-                            {processing && <Spinner />}
-                            Resend verification email
-                        </Button>
-
-                        <TextLink
-                            href={logout()}
-                            className="mx-auto block text-sm"
+                        <button
+                            type="submit"
+                            className={secondaryClass}
+                            disabled={processing}
                         >
-                            Log out
-                        </TextLink>
+                            {processing ? '送信中…' : '確認メールを再送する'}
+                        </button>
+
+                        <Link
+                            href={logout()}
+                            className={`${textLinkClass} mx-auto block text-sm`}
+                        >
+                            ログアウト
+                        </Link>
                     </>
                 )}
             </Form>
@@ -40,7 +39,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
 }
 
 VerifyEmail.layout = {
-    title: 'Email verification',
+    title: 'メールアドレスの確認',
     description:
-        'Please verify your email address by clicking on the link we just emailed to you.',
+        'お送りしたメール内のリンクをクリックして、メールアドレスの確認を完了してください。',
 };

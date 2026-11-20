@@ -1,11 +1,7 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 
@@ -16,7 +12,7 @@ type Props = {
 export default function Register({ passwordRules }: Props) {
     return (
         <>
-            <Head title="Register" />
+            <Head title="新規登録" />
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
@@ -25,10 +21,15 @@ export default function Register({ passwordRules }: Props) {
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-6">
+                        <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
-                                <Input
+                                <label
+                                    htmlFor="name"
+                                    className="text-sm font-semibold"
+                                >
+                                    ニックネーム
+                                </label>
+                                <input
                                     id="name"
                                     type="text"
                                     required
@@ -36,7 +37,8 @@ export default function Register({ passwordRules }: Props) {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Full name"
+                                    placeholder="えんがわ 太郎"
+                                    className={inputClass}
                                 />
                                 <InputError
                                     message={errors.name}
@@ -45,8 +47,13 @@ export default function Register({ passwordRules }: Props) {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
+                                <label
+                                    htmlFor="email"
+                                    className="text-sm font-semibold"
+                                >
+                                    メールアドレス
+                                </label>
+                                <input
                                     id="email"
                                     type="email"
                                     required
@@ -54,58 +61,72 @@ export default function Register({ passwordRules }: Props) {
                                     autoComplete="email"
                                     name="email"
                                     placeholder="email@example.com"
+                                    className={inputClass}
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <label
+                                    htmlFor="password"
+                                    className="text-sm font-semibold"
+                                >
+                                    パスワード
+                                </label>
                                 <PasswordInput
                                     id="password"
                                     required
                                     tabIndex={3}
                                     autoComplete="new-password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="パスワード"
                                     passwordrules={passwordRules}
+                                    className={inputClass}
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
-                                    Confirm password
-                                </Label>
+                                <label
+                                    htmlFor="password_confirmation"
+                                    className="text-sm font-semibold"
+                                >
+                                    パスワード（確認）
+                                </label>
                                 <PasswordInput
                                     id="password_confirmation"
                                     required
                                     tabIndex={4}
                                     autoComplete="new-password"
                                     name="password_confirmation"
-                                    placeholder="Confirm password"
+                                    placeholder="パスワード（確認）"
                                     passwordrules={passwordRules}
+                                    className={inputClass}
                                 />
                                 <InputError
                                     message={errors.password_confirmation}
                                 />
                             </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className={`${buttonClass} mt-2 w-full`}
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
-                                {processing && <Spinner />}
-                                Create account
-                            </Button>
+                                {processing ? '登録中…' : '登録する'}
+                            </button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
-                                Log in
-                            </TextLink>
+                        <div className="text-center text-sm text-stone-600">
+                            すでにアカウントをお持ちの方は{' '}
+                            <Link
+                                href={login()}
+                                className={textLinkClass}
+                                tabIndex={6}
+                            >
+                                ログイン
+                            </Link>
                         </div>
                     </>
                 )}
@@ -115,6 +136,6 @@ export default function Register({ passwordRules }: Props) {
 }
 
 Register.layout = {
-    title: 'Create an account',
-    description: 'Enter your details below to create your account',
+    title: '新規登録',
+    description: '必要事項を入力してアカウントを作成してください。',
 };

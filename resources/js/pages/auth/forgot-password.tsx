@@ -1,18 +1,13 @@
-// Components
-import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { Form, Head, Link } from '@inertiajs/react';
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
 import { login } from '@/routes';
 import { email } from '@/routes/password';
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
         <>
-            <Head title="Forgot password" />
+            <Head title="パスワードをお忘れの方" />
 
             {status && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
@@ -25,38 +20,45 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
+                                <label
+                                    htmlFor="email"
+                                    className="text-sm font-semibold"
+                                >
+                                    メールアドレス
+                                </label>
+                                <input
                                     id="email"
                                     type="email"
                                     name="email"
                                     autoComplete="off"
                                     autoFocus
                                     placeholder="email@example.com"
+                                    className={inputClass}
                                 />
 
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="my-6 flex items-center justify-start">
-                                <Button
-                                    className="w-full"
+                                <button
+                                    type="submit"
+                                    className={`${buttonClass} w-full`}
                                     disabled={processing}
                                     data-test="email-password-reset-link-button"
                                 >
-                                    {processing && (
-                                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                                    )}
-                                    Email password reset link
-                                </Button>
+                                    {processing
+                                        ? '送信中…'
+                                        : '再設定メールを送信する'}
+                                </button>
                             </div>
                         </>
                     )}
                 </Form>
 
-                <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>Or, return to</span>
-                    <TextLink href={login()}>log in</TextLink>
+                <div className="text-center text-sm text-stone-600">
+                    <Link href={login()} className={textLinkClass}>
+                        ログインへ戻る
+                    </Link>
                 </div>
             </div>
         </>
@@ -64,6 +66,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
 }
 
 ForgotPassword.layout = {
-    title: 'Forgot password',
-    description: 'Enter your email to receive a password reset link',
+    title: 'パスワードをお忘れの方',
+    description:
+        '登録したメールアドレスを入力してください。再設定用のリンクをお送りします。',
 };
