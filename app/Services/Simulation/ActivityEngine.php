@@ -331,6 +331,9 @@ class ActivityEngine
 
             return $tail !== '' && str_ends_with($community->name, $tail);
         });
+        if ($def === null) {
+            return false;
+        }
         $tpl = $def['topics'][array_rand($def['topics'])] ?? null;
         if ($tpl === null) {
             return false;
