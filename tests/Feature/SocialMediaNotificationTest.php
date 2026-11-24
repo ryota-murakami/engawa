@@ -259,6 +259,24 @@ class SocialMediaNotificationTest extends TestCase
         Queue::assertNothingPushed();
     }
 
+    public function test_notification_email_stops_after_the_daily_cap_but_in_app_notifications_continue(): void
+    {
+        // Arrange
+        $actor = User::factory()->create();
+        $owner = User::factory()->create();
+        $diary = $this->diary($owner);
+        $comment = DiaryComment::create(['diary_id' => $diary->id, 'user_id' => $actor->id, 'body' => 'Comment']);
+
+        // Act — simulation-scale notification volume against one real user.
+        for ($i = 0; $i < 11; $i++) {
+            (new NotifySocialActivity($owner->id, $actor->id, 'diary-comment', $comment->id))->handle();
+        }
+
+        // Assert — mail is capped at 10/day; in-app notifications keep flowing.
+        $this->assertCount(10, $this->mailMessages());
+        $this->assertDatabaseCount('notifications', 11);
+    }
+
     public function test_retry_of_the_same_serialized_job_does_not_duplicate_the_database_notification(): void
     {
         $actor = User::factory()->create();

@@ -10,10 +10,19 @@ use App\Services\SocialGraph;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 // 外側のNotifySocialActivity Jobだけをqueue化する。このNotificationは同期。
 class SocialActivity extends Notification
 {
+    /**
+     * 1ユーザーあたりの通知メールの1日上限。
+     * シミュレーションでは大量のソーシャルイベントが実ユーザー宛にも飛ぶため、
+     * メールプロバイダの日次無料枠を食い尽くさないようキャップする。
+     * （in-app の database 通知は制限しない）
+     */
+    private const DAILY_MAIL_LIMIT = 10;
+
     public function __construct(public string $kind, public int $subjectId, public int $actorId) {}
 
     /** @return array<int, string> */
@@ -26,11 +35,29 @@ class SocialActivity extends Notification
             $channels[] = 'database';
         }
 
-        if ($notifiable->email_social_notifications && $notifiable->hasVerifiedEmail()) {
+        if ($notifiable->email_social_notifications
+            && $notifiable->hasVerifiedEmail()
+            && ! self::mailQuotaExceeded($notifiable)) {
             $channels[] = 'mail';
         }
 
         return $channels;
+    }
+
+    /**
+     * その日のメール送信カウントをインクリメントし、上限到達時は true。
+     * via() が呼ばれる＝これから送信する、として先に消費しておく。
+     */
+    private static function mailQuotaExceeded(User $notifiable): bool
+    {
+        $key = 'social-mail:'.$notifiable->id.':'.now()->format('Ymd');
+        $count = (int) Cache::get($key, 0);
+        if ($count >= self::DAILY_MAIL_LIMIT) {
+            return true;
+        }
+        Cache::put($key, $count + 1, now()->endOfDay());
+
+        return false;
     }
 
     /** @return array{kind: string, subject_id: int, actor_id: int} */
