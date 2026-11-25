@@ -1,16 +1,16 @@
-import { Form, Head, Link } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import PasskeyVerify from '@/components/passkey-verify';
-import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
-import { register } from '@/routes';
-import { store } from '@/routes/login';
-import { request } from '@/routes/password';
+import { Form, Head, Link } from '@inertiajs/react'
+import InputError from '@/components/input-error'
+import PasswordInput from '@/components/password-input'
+import PasskeyVerify from '@/components/passkey-verify'
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui'
+import { register } from '@/routes'
+import { store } from '@/routes/login'
+import { request } from '@/routes/password'
 
 type Props = {
-    status?: string;
-    canResetPassword: boolean;
-};
+    status?: string
+    canResetPassword: boolean
+}
 
 export default function Login({ status, canResetPassword }: Props) {
     return (
@@ -23,19 +23,12 @@ export default function Login({ status, canResetPassword }: Props) {
                 separator="またはメールアドレスでログイン"
             />
 
-            <Form
-                {...store.form()}
-                resetOnSuccess={['password']}
-                className="flex flex-col gap-6"
-            >
+            <Form {...store.form()} resetOnSuccess={['password']} className="flex flex-col gap-6">
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <label
-                                    htmlFor="email"
-                                    className="text-sm font-semibold"
-                                >
+                                <label htmlFor="email" className="text-sm font-semibold">
                                     メールアドレス
                                 </label>
                                 <input
@@ -54,10 +47,7 @@ export default function Login({ status, canResetPassword }: Props) {
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <label
-                                        htmlFor="password"
-                                        className="text-sm font-semibold"
-                                    >
+                                    <label htmlFor="password" className="text-sm font-semibold">
                                         パスワード
                                     </label>
                                     {canResetPassword && (
@@ -108,11 +98,7 @@ export default function Login({ status, canResetPassword }: Props) {
 
                         <div className="text-center text-sm text-stone-600">
                             アカウントをお持ちでない方は{' '}
-                            <Link
-                                href={register()}
-                                className={textLinkClass}
-                                tabIndex={5}
-                            >
+                            <Link href={register()} className={textLinkClass} tabIndex={5}>
                                 新規登録
                             </Link>
                         </div>
@@ -121,15 +107,13 @@ export default function Login({ status, canResetPassword }: Props) {
             </Form>
 
             {status && (
-                <div className="mt-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
+                <div className="mt-4 text-center text-sm font-medium text-green-600">{status}</div>
             )}
         </>
-    );
+    )
 }
 
 Login.layout = {
     title: 'ログイン',
     description: 'メールアドレスとパスワードを入力してログインしてください。',
-};
+}

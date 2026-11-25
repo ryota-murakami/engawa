@@ -1,15 +1,15 @@
-import { Link } from '@inertiajs/react';
-import DiaryList from '@/components/social/diary-list';
-import SocialLayout from '@/components/social/social-layout';
-import { Section, secondaryClass } from '@/components/social/ui';
-import type { DiaryCard, Paginator } from '@/types/social';
+import { Link } from '@inertiajs/react'
+import DiaryList from '@/components/social/diary-list'
+import SocialLayout from '@/components/social/social-layout'
+import { Section, secondaryClass } from '@/components/social/ui'
+import type { DiaryCard, Paginator } from '@/types/social'
 
 export default function Home({
     diaries,
     filter,
 }: {
-    diaries: Paginator<DiaryCard>;
-    filter: 'friends' | 'all';
+    diaries: Paginator<DiaryCard>
+    filter: 'friends' | 'all'
 }) {
     return (
         <SocialLayout
@@ -32,15 +32,9 @@ export default function Home({
                     会員の日記
                 </Link>
             </nav>
-            <Section
-                title={
-                    filter === 'friends'
-                        ? 'マイミクと自分の新着日記'
-                        : '読める日記の一覧'
-                }
-            >
+            <Section title={filter === 'friends' ? 'マイミクと自分の新着日記' : '読める日記の一覧'}>
                 <DiaryList diaries={diaries} />
             </Section>
         </SocialLayout>
-    );
+    )
 }

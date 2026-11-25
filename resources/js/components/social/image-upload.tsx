@@ -1,35 +1,35 @@
-import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
-import { buttonClass, Field, FormErrors, inputClass } from './ui';
+import { useForm } from '@inertiajs/react'
+import { useRef } from 'react'
+import { buttonClass, Field, FormErrors, inputClass } from './ui'
 
 export default function ImageUpload({
     url,
     field,
     label,
 }: {
-    url: string;
-    field: 'image' | 'avatar';
-    label: string;
+    url: string
+    field: 'image' | 'avatar'
+    label: string
 }) {
     const form = useForm<{ image: File | null; avatar: File | null }>({
         image: null,
         avatar: null,
-    });
-    const fileInput = useRef<HTMLInputElement>(null);
-    const selected = form.data[field];
+    })
+    const fileInput = useRef<HTMLInputElement>(null)
+    const selected = form.data[field]
     return (
         <form
             className="space-y-4"
             onSubmit={(event) => {
-                event.preventDefault();
+                event.preventDefault()
                 form.post(url, {
                     forceFormData: true,
                     preserveScroll: true,
                     onSuccess: () => {
-                        form.reset();
-                        if (fileInput.current) fileInput.current.value = '';
+                        form.reset()
+                        if (fileInput.current) fileInput.current.value = ''
                     },
-                });
+                })
             }}
         >
             <Field
@@ -45,9 +45,7 @@ export default function ImageUpload({
                     accept="image/jpeg,image/png,image/webp"
                     required
                     disabled={form.processing}
-                    onChange={(event) =>
-                        form.setData(field, event.target.files?.[0] ?? null)
-                    }
+                    onChange={(event) => form.setData(field, event.target.files?.[0] ?? null)}
                     className={inputClass}
                     aria-invalid={Boolean(form.errors[field])}
                     aria-describedby={`upload-${field}-hint upload-${field}-error`}
@@ -62,11 +60,7 @@ export default function ImageUpload({
                 />
             )}
             <FormErrors errors={form.errors} />
-            <button
-                type="submit"
-                disabled={form.processing || !selected}
-                className={buttonClass}
-            >
+            <button type="submit" disabled={form.processing || !selected} className={buttonClass}>
                 {form.processing ? 'アップロード中…' : '画像をアップロード'}
             </button>
             {form.recentlySuccessful && (
@@ -75,5 +69,5 @@ export default function ImageUpload({
                 </p>
             )}
         </form>
-    );
+    )
 }

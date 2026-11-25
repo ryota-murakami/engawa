@@ -1,30 +1,30 @@
-import { Link, useForm } from '@inertiajs/react';
-import type { ReactNode } from 'react';
-import type { Paginator, UserCard, Visibility } from '@/types/social';
+import { Link, useForm } from '@inertiajs/react'
+import type { ReactNode } from 'react'
+import type { Paginator, UserCard, Visibility } from '@/types/social'
 
 export const inputClass =
-    'w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-orange-600 focus:ring-2 focus:ring-orange-100 disabled:opacity-60';
+    'w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-orange-600 focus:ring-2 focus:ring-orange-100 disabled:opacity-60'
 export const buttonClass =
-    'inline-flex min-h-10 items-center justify-center rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700 disabled:cursor-wait disabled:opacity-60';
+    'inline-flex min-h-10 items-center justify-center rounded-lg bg-orange-700 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700 disabled:cursor-wait disabled:opacity-60'
 export const secondaryClass =
-    'inline-flex min-h-10 items-center justify-center rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-medium text-stone-800 hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-orange-700 disabled:opacity-60';
+    'inline-flex min-h-10 items-center justify-center rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-medium text-stone-800 hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-orange-700 disabled:opacity-60'
 export const textLinkClass =
-    'font-medium text-orange-800 underline decoration-orange-300 underline-offset-4 hover:text-orange-950';
+    'font-medium text-orange-800 underline decoration-orange-300 underline-offset-4 hover:text-orange-950'
 
 export const visibilityLabels: Record<Visibility, string> = {
     members: '会員全体',
     friends: 'マイミクまで',
     private: '自分だけ',
-};
+}
 
 export function Section({
     title,
     children,
     action,
 }: {
-    title: string;
-    children: ReactNode;
-    action?: ReactNode;
+    title: string
+    children: ReactNode
+    action?: ReactNode
 }) {
     return (
         <section className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
@@ -34,7 +34,7 @@ export function Section({
             </div>
             <div className="space-y-5 p-5">{children}</div>
         </section>
-    );
+    )
 }
 
 export function Empty({ children }: { children: ReactNode }) {
@@ -42,7 +42,7 @@ export function Empty({ children }: { children: ReactNode }) {
         <p className="rounded-lg bg-stone-50 px-4 py-6 text-sm leading-7 text-stone-600">
             {children}
         </p>
-    );
+    )
 }
 
 export function Field({
@@ -52,11 +52,11 @@ export function Field({
     hint,
     children,
 }: {
-    id: string;
-    label: string;
-    error?: string;
-    hint?: string;
-    children: ReactNode;
+    id: string
+    label: string
+    error?: string
+    hint?: string
+    children: ReactNode
 }) {
     return (
         <div className="space-y-2">
@@ -65,39 +65,24 @@ export function Field({
             </label>
             {children}
             {hint && (
-                <p
-                    id={`${id}-hint`}
-                    className="text-xs leading-6 text-stone-600"
-                >
+                <p id={`${id}-hint`} className="text-xs leading-6 text-stone-600">
                     {hint}
                 </p>
             )}
             {error && (
-                <p
-                    id={`${id}-error`}
-                    role="alert"
-                    className="text-sm text-red-700"
-                >
+                <p id={`${id}-error`} role="alert" className="text-sm text-red-700">
                     {error}
                 </p>
             )}
         </div>
-    );
+    )
 }
 
-export function FormErrors({
-    errors,
-}: {
-    errors: Record<string, string | undefined>;
-}) {
+export function FormErrors({ errors }: { errors: Record<string, string | undefined> }) {
     const messages = [
-        ...new Set(
-            Object.values(errors).filter((value): value is string =>
-                Boolean(value),
-            ),
-        ),
-    ];
-    if (!messages.length) return null;
+        ...new Set(Object.values(errors).filter((value): value is string => Boolean(value))),
+    ]
+    if (!messages.length) return null
     return (
         <div
             role="alert"
@@ -107,7 +92,7 @@ export function FormErrors({
                 <p key={message}>{message}</p>
             ))}
         </div>
-    );
+    )
 }
 
 export function ActionButton({
@@ -117,22 +102,22 @@ export function ActionButton({
     confirm,
     danger = false,
 }: {
-    url: string;
-    method?: 'post' | 'patch' | 'delete';
-    children: ReactNode;
-    confirm?: string;
-    danger?: boolean;
+    url: string
+    method?: 'post' | 'patch' | 'delete'
+    children: ReactNode
+    confirm?: string
+    danger?: boolean
 }) {
-    const form = useForm({});
+    const form = useForm({})
     return (
         <form
             onSubmit={(event) => {
-                event.preventDefault();
-                if (confirm && !window.confirm(confirm)) return;
-                const options = { preserveScroll: true };
-                if (method === 'delete') form.delete(url, options);
-                else if (method === 'patch') form.patch(url, options);
-                else form.post(url, options);
+                event.preventDefault()
+                if (confirm && !window.confirm(confirm)) return
+                const options = { preserveScroll: true }
+                if (method === 'delete') form.delete(url, options)
+                else if (method === 'patch') form.patch(url, options)
+                else form.post(url, options)
             }}
             className="space-y-2"
         >
@@ -145,17 +130,17 @@ export function ActionButton({
             </button>
             <FormErrors errors={form.errors} />
         </form>
-    );
+    )
 }
 
 export function Avatar({
     user,
     large = false,
 }: {
-    user: Pick<UserCard, 'name' | 'avatar_url'>;
-    large?: boolean;
+    user: Pick<UserCard, 'name' | 'avatar_url'>
+    large?: boolean
 }) {
-    const size = large ? 'h-24 w-24 text-3xl' : 'h-10 w-10 text-base';
+    const size = large ? 'h-24 w-24 text-3xl' : 'h-10 w-10 text-base'
     return user.avatar_url ? (
         <img
             src={user.avatar_url}
@@ -170,7 +155,7 @@ export function Avatar({
         >
             {Array.from(user.name)[0] ?? '？'}
         </span>
-    );
+    )
 }
 
 export function MemberLink({ user }: { user: UserCard }) {
@@ -182,23 +167,23 @@ export function MemberLink({ user }: { user: UserCard }) {
             <Avatar user={user} />
             <span className={textLinkClass}>{user.name}</span>
         </Link>
-    );
+    )
 }
 
 export function DateTime({ value }: { value: string }) {
-    const date = new Date(value);
+    const date = new Date(value)
     const text = Number.isNaN(date.getTime())
         ? value
         : new Intl.DateTimeFormat('ja-JP', {
               dateStyle: 'medium',
               timeStyle: 'short',
               timeZone: 'Asia/Tokyo',
-          }).format(date);
+          }).format(date)
     return (
         <time dateTime={value} className="text-xs text-stone-500">
             {text}
         </time>
-    );
+    )
 }
 
 export function Pagination({
@@ -206,12 +191,8 @@ export function Pagination({
 }: {
     page: Pick<
         Paginator<unknown>,
-        | 'prev_page_url'
-        | 'next_page_url'
-        | 'current_page'
-        | 'last_page'
-        | 'total'
-    >;
+        'prev_page_url' | 'next_page_url' | 'current_page' | 'last_page' | 'total'
+    >
 }) {
     return (
         <nav
@@ -236,7 +217,7 @@ export function Pagination({
                 <span />
             )}
         </nav>
-    );
+    )
 }
 
 export function SearchForm({
@@ -244,17 +225,17 @@ export function SearchForm({
     action,
     label,
 }: {
-    initial?: string;
-    action: string;
-    label: string;
+    initial?: string
+    action: string
+    label: string
 }) {
-    const form = useForm({ q: initial });
+    const form = useForm({ q: initial })
     return (
         <form
             className="space-y-2"
             onSubmit={(event) => {
-                event.preventDefault();
-                form.get(action, { preserveState: true, replace: true });
+                event.preventDefault()
+                form.get(action, { preserveState: true, replace: true })
             }}
         >
             <label htmlFor="social-search" className="text-sm font-semibold">
@@ -269,15 +250,11 @@ export function SearchForm({
                     className={inputClass}
                     maxLength={100}
                 />
-                <button
-                    type="submit"
-                    disabled={form.processing}
-                    className={buttonClass}
-                >
+                <button type="submit" disabled={form.processing} className={buttonClass}>
                     {form.processing ? '検索中…' : '検索'}
                 </button>
             </div>
             <FormErrors errors={form.errors} />
         </form>
-    );
+    )
 }

@@ -1,8 +1,8 @@
-import { Form, Head, Link } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
-import { login } from '@/routes';
-import { email } from '@/routes/password';
+import { Form, Head, Link } from '@inertiajs/react'
+import InputError from '@/components/input-error'
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui'
+import { login } from '@/routes'
+import { email } from '@/routes/password'
 
 export default function ForgotPassword({ status }: { status?: string }) {
     return (
@@ -10,9 +10,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
             <Head title="パスワードをお忘れの方" />
 
             {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
+                <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>
             )}
 
             <div className="space-y-6">
@@ -20,10 +18,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <label
-                                    htmlFor="email"
-                                    className="text-sm font-semibold"
-                                >
+                                <label htmlFor="email" className="text-sm font-semibold">
                                     メールアドレス
                                 </label>
                                 <input
@@ -46,9 +41,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                     disabled={processing}
                                     data-test="email-password-reset-link-button"
                                 >
-                                    {processing
-                                        ? '送信中…'
-                                        : '再設定メールを送信する'}
+                                    {processing ? '送信中…' : '再設定メールを送信する'}
                                 </button>
                             </div>
                         </>
@@ -62,11 +55,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 </div>
             </div>
         </>
-    );
+    )
 }
 
 ForgotPassword.layout = {
     title: 'パスワードをお忘れの方',
-    description:
-        '登録したメールアドレスを入力してください。再設定用のリンクをお送りします。',
-};
+    description: '登録したメールアドレスを入力してください。再設定用のリンクをお送りします。',
+}

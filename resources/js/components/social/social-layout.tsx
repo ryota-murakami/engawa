@@ -1,8 +1,8 @@
-import { Head, Link, usePage } from '@inertiajs/react';
-import type { ReactNode } from 'react';
-import type { SocialSharedProps } from '@/types/social';
-import { ActionButton, buttonClass } from './ui';
-import { socialNavigation } from './social-navigation';
+import { Head, Link, usePage } from '@inertiajs/react'
+import type { ReactNode } from 'react'
+import type { SocialSharedProps } from '@/types/social'
+import { ActionButton, buttonClass } from './ui'
+import { socialNavigation } from './social-navigation'
 
 export default function SocialLayout({
     title,
@@ -10,16 +10,16 @@ export default function SocialLayout({
     children,
     action,
 }: {
-    title: string;
-    description?: string;
-    children: ReactNode;
-    action?: ReactNode;
+    title: string
+    description?: string
+    children: ReactNode
+    action?: ReactNode
 }) {
-    const page = usePage();
-    const shared = page.props as unknown as SocialSharedProps;
-    const user = shared.auth?.user;
-    const currentPath = page.url.split('?')[0];
-    const links = socialNavigation;
+    const page = usePage()
+    const shared = page.props as unknown as SocialSharedProps
+    const user = shared.auth?.user
+    const currentPath = page.url.split('?')[0]
+    const links = socialNavigation
     return (
         <div className="min-h-screen bg-[#f7f4ed] text-slate-900">
             <Head title={`${title} | えんがわ`} />
@@ -40,17 +40,12 @@ export default function SocialLayout({
                     <p className="hidden text-sm text-stone-500 sm:block">
                         日記から、つながる毎日。
                     </p>
-                    <span className="text-sm text-stone-600">
-                        {user?.name ?? 'メンバー'} さん
-                    </span>
+                    <span className="text-sm text-stone-600">{user?.name ?? 'メンバー'} さん</span>
                 </div>
             </header>
             <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 sm:px-6 md:grid-cols-[220px_minmax(0,1fr)]">
                 <aside className="space-y-4">
-                    <Link
-                        href="/diaries/create"
-                        className={`${buttonClass} w-full`}
-                    >
+                    <Link href="/diaries/create" className={`${buttonClass} w-full`}>
                         日記を書く
                     </Link>
                     <nav
@@ -61,9 +56,7 @@ export default function SocialLayout({
                             <Link
                                 key={href}
                                 href={href}
-                                aria-current={
-                                    currentPath === href ? 'page' : undefined
-                                }
+                                aria-current={currentPath === href ? 'page' : undefined}
                                 className={`rounded-lg px-3 py-2.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-orange-700 ${currentPath === href ? 'bg-orange-100 text-orange-900' : 'text-stone-700 hover:bg-stone-100'}`}
                             >
                                 {label}
@@ -79,16 +72,10 @@ export default function SocialLayout({
                     </div>
                     <ActionButton url="/logout">ログアウト</ActionButton>
                 </aside>
-                <main
-                    id="social-main"
-                    tabIndex={-1}
-                    className="min-w-0 space-y-5"
-                >
+                <main id="social-main" tabIndex={-1} className="min-w-0 space-y-5">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                         <div>
-                            <h1 className="text-2xl font-bold tracking-tight">
-                                {title}
-                            </h1>
+                            <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
                             {description && (
                                 <p className="mt-2 text-sm leading-7 text-stone-600">
                                     {description}
@@ -112,5 +99,5 @@ export default function SocialLayout({
                 えんがわ · メンバー同士で楽しむ小さな SNS
             </footer>
         </div>
-    );
+    )
 }

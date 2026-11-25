@@ -1,27 +1,23 @@
-import { Form } from '@inertiajs/react';
-import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { Check, Copy, ScanLine } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import AlertError from '@/components/alert-error';
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
+import { Form } from '@inertiajs/react'
+import { REGEXP_ONLY_DIGITS } from 'input-otp'
+import { Check, Copy, ScanLine } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import AlertError from '@/components/alert-error'
+import InputError from '@/components/input-error'
+import { Button } from '@/components/ui/button'
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSlot,
-} from '@/components/ui/input-otp';
-import { Spinner } from '@/components/ui/spinner';
-import { useAppearance } from '@/hooks/use-appearance';
-import { useClipboard } from '@/hooks/use-clipboard';
-import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
-import { confirm } from '@/routes/two-factor';
+} from '@/components/ui/dialog'
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
+import { Spinner } from '@/components/ui/spinner'
+import { useAppearance } from '@/hooks/use-appearance'
+import { useClipboard } from '@/hooks/use-clipboard'
+import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth'
+import { confirm } from '@/routes/two-factor'
 
 function GridScanIcon() {
     return (
@@ -46,7 +42,7 @@ function GridScanIcon() {
                 <ScanLine className="relative z-20 size-6 text-foreground" />
             </div>
         </div>
-    );
+    )
 }
 
 function TwoFactorSetupStep({
@@ -56,15 +52,15 @@ function TwoFactorSetupStep({
     onNextStep,
     errors,
 }: {
-    qrCodeSvg: string | null;
-    manualSetupKey: string | null;
-    buttonText: string;
-    onNextStep: () => void;
-    errors: string[];
+    qrCodeSvg: string | null
+    manualSetupKey: string | null
+    buttonText: string
+    onNextStep: () => void
+    errors: string[]
 }) {
-    const { resolvedAppearance } = useAppearance();
-    const [copiedText, copy] = useClipboard();
-    const IconComponent = copiedText === manualSetupKey ? Check : Copy;
+    const { resolvedAppearance } = useAppearance()
+    const [copiedText, copy] = useClipboard()
+    const IconComponent = copiedText === manualSetupKey ? Check : Copy
 
     return (
         <>
@@ -135,44 +131,36 @@ function TwoFactorSetupStep({
                 </>
             )}
         </>
-    );
+    )
 }
 
 function TwoFactorVerificationStep({
     onClose,
     onBack,
 }: {
-    onClose: () => void;
-    onBack: () => void;
+    onClose: () => void
+    onBack: () => void
 }) {
-    const [code, setCode] = useState<string>('');
-    const pinInputContainerRef = useRef<HTMLDivElement>(null);
+    const [code, setCode] = useState<string>('')
+    const pinInputContainerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setTimeout(() => {
-            pinInputContainerRef.current?.querySelector('input')?.focus();
-        }, 0);
-    }, []);
+            pinInputContainerRef.current?.querySelector('input')?.focus()
+        }, 0)
+    }, [])
 
     return (
-        <Form
-            {...confirm.form()}
-            onSuccess={() => onClose()}
-            resetOnError
-            resetOnSuccess
-        >
+        <Form {...confirm.form()} onSuccess={() => onClose()} resetOnError resetOnSuccess>
             {({
                 processing,
                 errors,
             }: {
-                processing: boolean;
-                errors?: { confirmTwoFactorAuthentication?: { code?: string } };
+                processing: boolean
+                errors?: { confirmTwoFactorAuthentication?: { code?: string } }
             }) => (
                 <>
-                    <div
-                        ref={pinInputContainerRef}
-                        className="relative w-full space-y-3"
-                    >
+                    <div ref={pinInputContainerRef} className="relative w-full space-y-3">
                         <div className="flex w-full flex-col items-center space-y-3 py-2">
                             <InputOTP
                                 id="otp"
@@ -184,22 +172,12 @@ function TwoFactorVerificationStep({
                                 autoFocus
                             >
                                 <InputOTPGroup>
-                                    {Array.from(
-                                        { length: OTP_MAX_LENGTH },
-                                        (_, index) => (
-                                            <InputOTPSlot
-                                                key={index}
-                                                index={index}
-                                            />
-                                        ),
-                                    )}
+                                    {Array.from({ length: OTP_MAX_LENGTH }, (_, index) => (
+                                        <InputOTPSlot key={index} index={index} />
+                                    ))}
                                 </InputOTPGroup>
                             </InputOTP>
-                            <InputError
-                                message={
-                                    errors?.confirmTwoFactorAuthentication?.code
-                                }
-                            />
+                            <InputError message={errors?.confirmTwoFactorAuthentication?.code} />
                         </div>
 
                         <div className="flex w-full space-x-5">
@@ -215,9 +193,7 @@ function TwoFactorVerificationStep({
                             <Button
                                 type="submit"
                                 className="flex-1"
-                                disabled={
-                                    processing || code.length < OTP_MAX_LENGTH
-                                }
+                                disabled={processing || code.length < OTP_MAX_LENGTH}
                             >
                                 Confirm
                             </Button>
@@ -226,20 +202,20 @@ function TwoFactorVerificationStep({
                 </>
             )}
         </Form>
-    );
+    )
 }
 
 type Props = {
-    isOpen: boolean;
-    onClose: () => void;
-    requiresConfirmation: boolean;
-    twoFactorEnabled: boolean;
-    qrCodeSvg: string | null;
-    manualSetupKey: string | null;
-    clearSetupData: () => void;
-    fetchSetupData: () => Promise<void>;
-    errors: string[];
-};
+    isOpen: boolean
+    onClose: () => void
+    requiresConfirmation: boolean
+    twoFactorEnabled: boolean
+    qrCodeSvg: string | null
+    manualSetupKey: string | null
+    clearSetupData: () => void
+    fetchSetupData: () => Promise<void>
+    errors: string[]
+}
 
 export default function TwoFactorSetupModal({
     isOpen,
@@ -252,13 +228,12 @@ export default function TwoFactorSetupModal({
     fetchSetupData,
     errors,
 }: Props) {
-    const [showVerificationStep, setShowVerificationStep] =
-        useState<boolean>(false);
+    const [showVerificationStep, setShowVerificationStep] = useState<boolean>(false)
 
     const modalConfig = useMemo<{
-        title: string;
-        description: string;
-        buttonText: string;
+        title: string
+        description: string
+        buttonText: string
     }>(() => {
         if (twoFactorEnabled) {
             return {
@@ -266,16 +241,15 @@ export default function TwoFactorSetupModal({
                 description:
                     'Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.',
                 buttonText: 'Close',
-            };
+            }
         }
 
         if (showVerificationStep) {
             return {
                 title: 'Verify authentication code',
-                description:
-                    'Enter the 6-digit code from your authenticator app',
+                description: 'Enter the 6-digit code from your authenticator app',
                 buttonText: 'Continue',
-            };
+            }
         }
 
         return {
@@ -283,44 +257,44 @@ export default function TwoFactorSetupModal({
             description:
                 'To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app',
             buttonText: 'Continue',
-        };
-    }, [twoFactorEnabled, showVerificationStep]);
+        }
+    }, [twoFactorEnabled, showVerificationStep])
 
     const resetModalState = useCallback(() => {
         if (twoFactorEnabled) {
-            clearSetupData();
+            clearSetupData()
         }
 
-        setShowVerificationStep(false);
-    }, [clearSetupData, twoFactorEnabled]);
+        setShowVerificationStep(false)
+    }, [clearSetupData, twoFactorEnabled])
 
     const handleClose = useCallback(() => {
-        resetModalState();
-        onClose();
-    }, [onClose, resetModalState]);
+        resetModalState()
+        onClose()
+    }, [onClose, resetModalState])
 
     const handleModalNextStep = useCallback(() => {
         if (requiresConfirmation) {
-            setShowVerificationStep(true);
+            setShowVerificationStep(true)
 
-            return;
+            return
         }
 
-        clearSetupData();
-        handleClose();
-    }, [requiresConfirmation, clearSetupData, handleClose]);
+        clearSetupData()
+        handleClose()
+    }, [requiresConfirmation, clearSetupData, handleClose])
 
-    const fetchSetupDataRef = useRef(fetchSetupData);
+    const fetchSetupDataRef = useRef(fetchSetupData)
 
     useEffect(() => {
-        fetchSetupDataRef.current = fetchSetupData;
-    }, [fetchSetupData]);
+        fetchSetupDataRef.current = fetchSetupData
+    }, [fetchSetupData])
 
     useEffect(() => {
         if (isOpen && !qrCodeSvg) {
-            void fetchSetupDataRef.current();
+            void fetchSetupDataRef.current()
         }
-    }, [isOpen, qrCodeSvg]);
+    }, [isOpen, qrCodeSvg])
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
@@ -351,5 +325,5 @@ export default function TwoFactorSetupModal({
                 </div>
             </DialogContent>
         </Dialog>
-    );
+    )
 }

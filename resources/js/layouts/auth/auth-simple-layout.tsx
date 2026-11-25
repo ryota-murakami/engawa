@@ -1,14 +1,10 @@
-import { Link } from '@inertiajs/react';
-import { home } from '@/routes';
-import type { AuthLayoutProps } from '@/types';
+import { Link } from '@inertiajs/react'
+import { home } from '@/routes'
+import type { AuthLayoutProps } from '@/types'
 
 // The auth screens share the site's えんがわ look (cream bg, orange accent,
 // white card). AuthLayoutProps.title/description render inside the card band.
-export default function AuthSimpleLayout({
-    children,
-    title,
-    description,
-}: AuthLayoutProps) {
+export default function AuthSimpleLayout({ children, title, description }: AuthLayoutProps) {
     return (
         <div className="flex min-h-svh flex-col bg-[#f7f4ed] text-slate-900">
             <header className="border-b border-orange-200 bg-white">
@@ -46,8 +42,7 @@ export default function AuthSimpleLayout({
                             '--color-accent': '#f5f5f4',
                             '--color-accent-foreground': '#1c1917',
                             '--color-destructive': 'oklch(0.577 0.245 27.325)',
-                            '--color-destructive-foreground':
-                                'oklch(0.577 0.245 27.325)',
+                            '--color-destructive-foreground': 'oklch(0.577 0.245 27.325)',
                             '--color-border': '#e7e5e4',
                             '--color-input': '#d6d3d1',
                             '--color-ring': '#c2410c',
@@ -55,13 +50,9 @@ export default function AuthSimpleLayout({
                     }
                 >
                     <div className="border-b border-stone-200 bg-orange-50 px-6 py-4">
-                        <h1 className="text-lg font-bold text-stone-900">
-                            {title}
-                        </h1>
+                        <h1 className="text-lg font-bold text-stone-900">{title}</h1>
                         {description && (
-                            <p className="mt-1 text-sm leading-6 text-stone-600">
-                                {description}
-                            </p>
+                            <p className="mt-1 text-sm leading-6 text-stone-600">{description}</p>
                         )}
                     </div>
                     <div className="p-6">{children}</div>
@@ -71,5 +62,5 @@ export default function AuthSimpleLayout({
                 えんがわ · メンバー同士で楽しむ小さな SNS
             </footer>
         </div>
-    );
+    )
 }

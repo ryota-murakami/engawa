@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import SocialLayout from '@/components/social/social-layout';
+import { Link } from '@inertiajs/react'
+import SocialLayout from '@/components/social/social-layout'
 import {
     ActionButton,
     buttonClass,
@@ -9,8 +9,8 @@ import {
     Pagination,
     Section,
     textLinkClass,
-} from '@/components/social/ui';
-import type { CommunityCard, Paginator, TopicCard } from '@/types/social';
+} from '@/components/social/ui'
+import type { CommunityCard, Paginator, TopicCard } from '@/types/social'
 
 export default function Community({
     community,
@@ -18,10 +18,10 @@ export default function Community({
     is_member,
     is_owner,
 }: {
-    community: CommunityCard;
-    topics: Paginator<TopicCard>;
-    is_member: boolean;
-    is_owner: boolean;
+    community: CommunityCard
+    topics: Paginator<TopicCard>
+    is_member: boolean
+    is_owner: boolean
 }) {
     return (
         <SocialLayout title={community.name}>
@@ -78,19 +78,11 @@ export default function Community({
                     )
                 }
             >
-                {!topics.data.length && (
-                    <Empty>トピックはまだありません。</Empty>
-                )}
+                {!topics.data.length && <Empty>トピックはまだありません。</Empty>}
                 {topics.data.map((topic) => (
-                    <article
-                        key={topic.id}
-                        className="space-y-3 border-b border-stone-100 pb-4"
-                    >
+                    <article key={topic.id} className="space-y-3 border-b border-stone-100 pb-4">
                         <h2 className="font-bold">
-                            <Link
-                                href={`/topics/${topic.id}`}
-                                className={textLinkClass}
-                            >
+                            <Link href={`/topics/${topic.id}`} className={textLinkClass}>
                                 {topic.title}
                             </Link>
                         </h2>
@@ -106,5 +98,5 @@ export default function Community({
                 <Pagination page={topics} />
             </Section>
         </SocialLayout>
-    );
+    )
 }

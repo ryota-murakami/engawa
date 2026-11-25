@@ -1,6 +1,6 @@
-import { Head } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import { dashboard } from '@/routes';
+import { Head } from '@inertiajs/react'
+import { PlaceholderPattern } from '@/components/ui/placeholder-pattern'
+import { dashboard } from '@/routes'
 
 export default function Dashboard() {
     return (
@@ -23,7 +23,7 @@ export default function Dashboard() {
                 </div>
             </div>
         </>
-    );
+    )
 }
 
 Dashboard.layout = {
@@ -33,4 +33,4 @@ Dashboard.layout = {
             href: dashboard(),
         },
     ],
-};
+}

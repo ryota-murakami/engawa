@@ -1,14 +1,14 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import { buttonClass, inputClass } from '@/components/social/ui';
-import { update } from '@/routes/password';
+import { Form, Head } from '@inertiajs/react'
+import InputError from '@/components/input-error'
+import PasswordInput from '@/components/password-input'
+import { buttonClass, inputClass } from '@/components/social/ui'
+import { update } from '@/routes/password'
 
 type Props = {
-    token: string;
-    email: string;
-    passwordRules: string;
-};
+    token: string
+    email: string
+    passwordRules: string
+}
 
 export default function ResetPassword({ token, email, passwordRules }: Props) {
     return (
@@ -23,10 +23,7 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                 {({ processing, errors }) => (
                     <div className="grid gap-5">
                         <div className="grid gap-2">
-                            <label
-                                htmlFor="email"
-                                className="text-sm font-semibold"
-                            >
+                            <label htmlFor="email" className="text-sm font-semibold">
                                 メールアドレス
                             </label>
                             <input
@@ -38,17 +35,11 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                                 className={`${inputClass} mt-1`}
                                 readOnly
                             />
-                            <InputError
-                                message={errors.email}
-                                className="mt-2"
-                            />
+                            <InputError message={errors.email} className="mt-2" />
                         </div>
 
                         <div className="grid gap-2">
-                            <label
-                                htmlFor="password"
-                                className="text-sm font-semibold"
-                            >
+                            <label htmlFor="password" className="text-sm font-semibold">
                                 新しいパスワード
                             </label>
                             <PasswordInput
@@ -78,10 +69,7 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                                 placeholder="新しいパスワード（確認）"
                                 passwordrules={passwordRules}
                             />
-                            <InputError
-                                message={errors.password_confirmation}
-                                className="mt-2"
-                            />
+                            <InputError message={errors.password_confirmation} className="mt-2" />
                         </div>
 
                         <button
@@ -96,10 +84,10 @@ export default function ResetPassword({ token, email, passwordRules }: Props) {
                 )}
             </Form>
         </>
-    );
+    )
 }
 
 ResetPassword.layout = {
     title: 'パスワードの再設定',
     description: '新しいパスワードを入力してください。',
-};
+}

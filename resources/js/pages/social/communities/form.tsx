@@ -1,5 +1,5 @@
-import { Link, useForm } from '@inertiajs/react';
-import SocialLayout from '@/components/social/social-layout';
+import { Link, useForm } from '@inertiajs/react'
+import SocialLayout from '@/components/social/social-layout'
 import {
     buttonClass,
     Field,
@@ -7,10 +7,10 @@ import {
     inputClass,
     Section,
     secondaryClass,
-} from '@/components/social/ui';
+} from '@/components/social/ui'
 
 export default function CommunityForm() {
-    const form = useForm({ name: '', description: '' });
+    const form = useForm({ name: '', description: '' })
     return (
         <SocialLayout
             title="コミュニティを作る"
@@ -20,22 +20,16 @@ export default function CommunityForm() {
                 <form
                     className="space-y-5"
                     onSubmit={(event) => {
-                        event.preventDefault();
-                        form.post('/communities');
+                        event.preventDefault()
+                        form.post('/communities')
                     }}
                 >
-                    <Field
-                        id="community-name"
-                        label="コミュニティ名"
-                        error={form.errors.name}
-                    >
+                    <Field id="community-name" label="コミュニティ名" error={form.errors.name}>
                         <input
                             id="community-name"
                             className={inputClass}
                             value={form.data.name}
-                            onChange={(event) =>
-                                form.setData('name', event.target.value)
-                            }
+                            onChange={(event) => form.setData('name', event.target.value)}
                             required
                             maxLength={80}
                             aria-invalid={Boolean(form.errors.name)}
@@ -51,9 +45,7 @@ export default function CommunityForm() {
                             id="community-description"
                             className={inputClass}
                             value={form.data.description}
-                            onChange={(event) =>
-                                form.setData('description', event.target.value)
-                            }
+                            onChange={(event) => form.setData('description', event.target.value)}
                             required
                             rows={8}
                             maxLength={5000}
@@ -62,11 +54,7 @@ export default function CommunityForm() {
                     </Field>
                     <FormErrors errors={form.errors} />
                     <div className="flex flex-wrap gap-3">
-                        <button
-                            type="submit"
-                            disabled={form.processing}
-                            className={buttonClass}
-                        >
+                        <button type="submit" disabled={form.processing} className={buttonClass}>
                             {form.processing ? '作成中…' : 'コミュニティを作る'}
                         </button>
                         <Link href="/communities" className={secondaryClass}>
@@ -76,5 +64,5 @@ export default function CommunityForm() {
                 </form>
             </Section>
         </SocialLayout>
-    );
+    )
 }

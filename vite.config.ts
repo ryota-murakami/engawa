@@ -53,7 +53,6 @@ export default defineConfig({
     fmt: {
         singleQuote: true,
         semi: false,
-        singleAttributePerLine: false,
         htmlWhitespaceSensitivity: 'css',
         ignorePatterns: [
             '.github/**',

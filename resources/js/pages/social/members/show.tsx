@@ -1,20 +1,9 @@
-import { Link, router, usePage } from '@inertiajs/react';
-import { useEffect, useRef } from 'react';
-import DiaryList from '@/components/social/diary-list';
-import SocialLayout from '@/components/social/social-layout';
-import {
-    ActionButton,
-    Avatar,
-    Section,
-    secondaryClass,
-} from '@/components/social/ui';
-import type {
-    DiaryCard,
-    Friendship,
-    Paginator,
-    SocialSharedProps,
-    UserCard,
-} from '@/types/social';
+import { Link, router, usePage } from '@inertiajs/react'
+import { useEffect, useRef } from 'react'
+import DiaryList from '@/components/social/diary-list'
+import SocialLayout from '@/components/social/social-layout'
+import { ActionButton, Avatar, Section, secondaryClass } from '@/components/social/ui'
+import type { DiaryCard, Friendship, Paginator, SocialSharedProps, UserCard } from '@/types/social'
 
 export default function Member({
     member,
@@ -22,19 +11,19 @@ export default function Member({
     friendship,
     is_self,
 }: {
-    member: UserCard;
-    diaries: Paginator<DiaryCard>;
-    friendship: Friendship | null;
-    is_self: boolean;
+    member: UserCard
+    diaries: Paginator<DiaryCard>
+    friendship: Friendship | null
+    is_self: boolean
 }) {
-    const props = usePage().props as unknown as SocialSharedProps;
-    const userId = props.auth?.user?.id;
-    const recordedId = useRef<number | null>(null);
+    const props = usePage().props as unknown as SocialSharedProps
+    const userId = props.auth?.user?.id
+    const recordedId = useRef<number | null>(null)
     useEffect(() => {
         // GET・prefetchでは記録しない。実際の画面mount後だけ明示的にPOSTする。
         // React StrictModeでeffectが再実行されても同じ訪問を二重送信しない。
-        if (is_self || recordedId.current === member.id) return;
-        recordedId.current = member.id;
+        if (is_self || recordedId.current === member.id) return
+        recordedId.current = member.id
         router.post(
             `/members/${member.id}/footprint`,
             {},
@@ -44,8 +33,8 @@ export default function Member({
                 replace: true,
                 showProgress: false,
             },
-        );
-    }, [is_self, member.id]);
+        )
+    }, [is_self, member.id])
     return (
         <SocialLayout title={`${member.name} さんのページ`}>
             <Section title="プロフィール">
@@ -66,9 +55,7 @@ export default function Member({
                     <div className="space-y-4">
                         <div className="flex flex-wrap gap-3">
                             {!friendship && (
-                                <ActionButton
-                                    url={`/members/${member.id}/friend-request`}
-                                >
+                                <ActionButton url={`/members/${member.id}/friend-request`}>
                                     マイミク申請を送る
                                 </ActionButton>
                             )}
@@ -137,5 +124,5 @@ export default function Member({
                 <DiaryList diaries={diaries} />
             </Section>
         </SocialLayout>
-    );
+    )
 }

@@ -1,7 +1,7 @@
-import { Head } from '@inertiajs/react';
-import AppearanceTabs from '@/components/appearance-tabs';
-import Heading from '@/components/heading';
-import { edit as editAppearance } from '@/routes/appearance';
+import { Head } from '@inertiajs/react'
+import AppearanceTabs from '@/components/appearance-tabs'
+import Heading from '@/components/heading'
+import { edit as editAppearance } from '@/routes/appearance'
 
 export default function Appearance() {
     return (
@@ -19,7 +19,7 @@ export default function Appearance() {
                 <AppearanceTabs />
             </div>
         </>
-    );
+    )
 }
 
 Appearance.layout = {
@@ -29,4 +29,4 @@ Appearance.layout = {
             href: editAppearance(),
         },
     ],
-};
+}

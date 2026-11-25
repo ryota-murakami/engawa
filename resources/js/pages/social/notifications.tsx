@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import SocialLayout from '@/components/social/social-layout';
+import { Link } from '@inertiajs/react'
+import SocialLayout from '@/components/social/social-layout'
 import {
     ActionButton,
     DateTime,
@@ -7,13 +7,13 @@ import {
     Pagination,
     Section,
     textLinkClass,
-} from '@/components/social/ui';
-import type { NotificationItem, Paginator } from '@/types/social';
+} from '@/components/social/ui'
+import type { NotificationItem, Paginator } from '@/types/social'
 
 export default function Notifications({
     notifications,
 }: {
-    notifications: Paginator<NotificationItem>;
+    notifications: Paginator<NotificationItem>
 }) {
     return (
         <SocialLayout
@@ -21,9 +21,7 @@ export default function Notifications({
             description="現在も閲覧できる申請やコメントのお知らせを表示します。"
         >
             <Section title="届いたお知らせ">
-                {!notifications.data.length && (
-                    <Empty>表示できるお知らせはありません。</Empty>
-                )}
+                {!notifications.data.length && <Empty>表示できるお知らせはありません。</Empty>}
                 {notifications.data.map((notification) => (
                     <article
                         key={notification.id}
@@ -37,10 +35,7 @@ export default function Notifications({
                         </div>
                         <p className="text-sm leading-7">{notification.text}</p>
                         <div className="flex flex-wrap items-center gap-4">
-                            <Link
-                                href={notification.url}
-                                className={textLinkClass}
-                            >
+                            <Link href={notification.url} className={textLinkClass}>
                                 内容を見る
                             </Link>
                             {!notification.read_at && (
@@ -57,5 +52,5 @@ export default function Notifications({
                 <Pagination page={notifications} />
             </Section>
         </SocialLayout>
-    );
+    )
 }

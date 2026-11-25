@@ -8,4 +8,4 @@ export const socialNavigation = [
     ['/notifications', 'お知らせ'],
     ['/search', '日記を検索'],
     ['/profile/edit', 'プロフィール設定'],
-] as const;
+] as const

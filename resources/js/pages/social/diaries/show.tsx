@@ -1,7 +1,7 @@
-import { Link } from '@inertiajs/react';
-import CommentThread from '@/components/social/comment-thread';
-import ImageUpload from '@/components/social/image-upload';
-import SocialLayout from '@/components/social/social-layout';
+import { Link } from '@inertiajs/react'
+import CommentThread from '@/components/social/comment-thread'
+import ImageUpload from '@/components/social/image-upload'
+import SocialLayout from '@/components/social/social-layout'
 import {
     ActionButton,
     DateTime,
@@ -9,19 +9,19 @@ import {
     Section,
     secondaryClass,
     visibilityLabels,
-} from '@/components/social/ui';
-import type { CommentCard, DiaryCard, Paginator } from '@/types/social';
+} from '@/components/social/ui'
+import type { CommentCard, DiaryCard, Paginator } from '@/types/social'
 
 export default function Diary({
     diary,
     comments,
     can_comment,
 }: {
-    diary: DiaryCard;
-    comments: Paginator<CommentCard>;
-    can_comment: boolean;
+    diary: DiaryCard
+    comments: Paginator<CommentCard>
+    can_comment: boolean
 }) {
-    const images = diary.images ?? [];
+    const images = diary.images ?? []
     return (
         <SocialLayout title={diary.title}>
             <Section title="日記">
@@ -32,9 +32,7 @@ export default function Diary({
                 <p className="text-xs text-stone-600">
                     公開範囲：{visibilityLabels[diary.visibility]}
                 </p>
-                <p className="leading-8 break-words whitespace-pre-wrap">
-                    {diary.body}
-                </p>
+                <p className="leading-8 break-words whitespace-pre-wrap">{diary.body}</p>
                 {images.length > 0 && (
                     <div className="grid gap-4 sm:grid-cols-2">
                         {images.map((image, index) => (
@@ -68,10 +66,7 @@ export default function Diary({
                 )}
                 {diary.can_update && (
                     <div className="flex flex-wrap gap-3">
-                        <Link
-                            href={`/diaries/${diary.id}/edit`}
-                            className={secondaryClass}
-                        >
+                        <Link href={`/diaries/${diary.id}/edit`} className={secondaryClass}>
                             日記を編集
                         </Link>
                         <ActionButton
@@ -95,8 +90,7 @@ export default function Diary({
                         />
                     ) : (
                         <p className="text-sm text-stone-600">
-                            画像は 3 枚までです。入れ替えるときは、先に 1
-                            枚削除してください。
+                            画像は 3 枚までです。入れ替えるときは、先に 1 枚削除してください。
                         </p>
                     )}
                 </Section>
@@ -111,5 +105,5 @@ export default function Diary({
                 />
             </Section>
         </SocialLayout>
-    );
+    )
 }

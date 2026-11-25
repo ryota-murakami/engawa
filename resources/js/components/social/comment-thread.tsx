@@ -1,5 +1,5 @@
-import { useForm } from '@inertiajs/react';
-import type { CommentCard, Paginator } from '@/types/social';
+import { useForm } from '@inertiajs/react'
+import type { CommentCard, Paginator } from '@/types/social'
 import {
     ActionButton,
     buttonClass,
@@ -10,7 +10,7 @@ import {
     inputClass,
     MemberLink,
     Pagination,
-} from './ui';
+} from './ui'
 
 export default function CommentThread({
     comments,
@@ -19,21 +19,18 @@ export default function CommentThread({
     canPost,
     noun = 'コメント',
 }: {
-    comments: Paginator<CommentCard>;
-    postUrl: string;
-    deletePrefix: string;
-    canPost: boolean;
-    noun?: string;
+    comments: Paginator<CommentCard>
+    postUrl: string
+    deletePrefix: string
+    canPost: boolean
+    noun?: string
 }) {
-    const form = useForm({ body: '' });
+    const form = useForm({ body: '' })
     return (
         <div className="space-y-6">
             {!comments.data.length && <Empty>まだ{noun}はありません。</Empty>}
             {comments.data.map((comment) => (
-                <article
-                    key={comment.id}
-                    className="space-y-3 border-b border-stone-100 pb-4"
-                >
+                <article key={comment.id} className="space-y-3 border-b border-stone-100 pb-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <MemberLink user={comment.author} />
                         <DateTime value={comment.created_at} />
@@ -58,11 +55,11 @@ export default function CommentThread({
                 <form
                     className="space-y-4"
                     onSubmit={(event) => {
-                        event.preventDefault();
+                        event.preventDefault()
                         form.post(postUrl, {
                             preserveScroll: true,
                             onSuccess: () => form.reset('body'),
-                        });
+                        })
                     }}
                 >
                     <Field
@@ -74,9 +71,7 @@ export default function CommentThread({
                         <textarea
                             id="comment-body"
                             value={form.data.body}
-                            onChange={(event) =>
-                                form.setData('body', event.target.value)
-                            }
+                            onChange={(event) => form.setData('body', event.target.value)}
                             className={inputClass}
                             rows={4}
                             required
@@ -86,11 +81,7 @@ export default function CommentThread({
                         />
                     </Field>
                     <FormErrors errors={form.errors} />
-                    <button
-                        type="submit"
-                        disabled={form.processing}
-                        className={buttonClass}
-                    >
+                    <button type="submit" disabled={form.processing} className={buttonClass}>
                         {form.processing ? '送信中…' : `${noun}を送信`}
                     </button>
                     {form.recentlySuccessful && (
@@ -100,10 +91,8 @@ export default function CommentThread({
                     )}
                 </form>
             ) : (
-                <p className="text-sm text-stone-600">
-                    現在、このページには投稿できません。
-                </p>
+                <p className="text-sm text-stone-600">現在、このページには投稿できません。</p>
             )}
         </div>
-    );
+    )
 }

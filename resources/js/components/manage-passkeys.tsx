@@ -1,15 +1,15 @@
-import { router } from '@inertiajs/react';
-import { KeyRound } from 'lucide-react';
-import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
-import Heading from '@/components/heading';
-import PasskeyItem from '@/components/passkey-item';
-import PasskeyRegistration from '@/components/passkey-register';
-import type { Passkey } from '@/types/auth';
+import { router } from '@inertiajs/react'
+import { KeyRound } from 'lucide-react'
+import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController'
+import Heading from '@/components/heading'
+import PasskeyItem from '@/components/passkey-item'
+import PasskeyRegistration from '@/components/passkey-register'
+import type { Passkey } from '@/types/auth'
 
 export type Props = {
-    canManagePasskeys?: boolean;
-    passkeys?: Passkey[];
-};
+    canManagePasskeys?: boolean
+    passkeys?: Passkey[]
+}
 
 const EmptyState = () => {
     return (
@@ -22,25 +22,25 @@ const EmptyState = () => {
                 Add a passkey to sign in without a password
             </p>
         </div>
-    );
-};
+    )
+}
 
 export default function ManagePasskeys(props: Props) {
-    const passkeys = props.passkeys ?? [];
+    const passkeys = props.passkeys ?? []
 
     const handleDelete = (id: number, onError: () => void) => {
         router.delete(destroy.url(id), {
             preserveScroll: true,
             onError,
-        });
-    };
+        })
+    }
 
     const handleRegisterSuccess = () => {
-        router.reload();
-    };
+        router.reload()
+    }
 
     if (!(props.canManagePasskeys ?? false)) {
-        return null;
+        return null
     }
 
     return (
@@ -54,11 +54,7 @@ export default function ManagePasskeys(props: Props) {
             <div className="overflow-hidden rounded-lg border border-border">
                 {passkeys.length > 0 ? (
                     passkeys.map((passkey) => (
-                        <PasskeyItem
-                            key={passkey.id}
-                            passkey={passkey}
-                            onDelete={handleDelete}
-                        />
+                        <PasskeyItem key={passkey.id} passkey={passkey} onDelete={handleDelete} />
                     ))
                 ) : (
                     <EmptyState />
@@ -67,5 +63,5 @@ export default function ManagePasskeys(props: Props) {
 
             <PasskeyRegistration onSuccess={handleRegisterSuccess} />
         </div>
-    );
+    )
 }

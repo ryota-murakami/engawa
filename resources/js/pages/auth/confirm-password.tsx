@@ -1,13 +1,13 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import PasskeyVerify from '@/components/passkey-verify';
-import { buttonClass, inputClass } from '@/components/social/ui';
-import { store } from '@/routes/password/confirm';
+import { Form, Head } from '@inertiajs/react'
+import InputError from '@/components/input-error'
+import PasswordInput from '@/components/password-input'
+import PasskeyVerify from '@/components/passkey-verify'
+import { buttonClass, inputClass } from '@/components/social/ui'
+import { store } from '@/routes/password/confirm'
 import {
     index as confirmOptions,
     store as confirmStore,
-} from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController';
+} from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyConfirmationController'
 
 export default function ConfirmPassword() {
     return (
@@ -28,10 +28,7 @@ export default function ConfirmPassword() {
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">
-                            <label
-                                htmlFor="password"
-                                className="text-sm font-semibold"
-                            >
+                            <label htmlFor="password" className="text-sm font-semibold">
                                 パスワード
                             </label>
                             <PasswordInput
@@ -60,10 +57,10 @@ export default function ConfirmPassword() {
                 )}
             </Form>
         </>
-    );
+    )
 }
 
 ConfirmPassword.layout = {
     title: 'パスワードの確認',
     description: '安全のため、続ける前にパスワードをもう一度入力してください。',
-};
+}

@@ -1,13 +1,13 @@
-import { Form, Head, Link } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui';
-import { login } from '@/routes';
-import { store } from '@/routes/register';
+import { Form, Head, Link } from '@inertiajs/react'
+import InputError from '@/components/input-error'
+import PasswordInput from '@/components/password-input'
+import { buttonClass, inputClass, textLinkClass } from '@/components/social/ui'
+import { login } from '@/routes'
+import { store } from '@/routes/register'
 
 type Props = {
-    passwordRules: string;
-};
+    passwordRules: string
+}
 
 export default function Register({ passwordRules }: Props) {
     return (
@@ -23,10 +23,7 @@ export default function Register({ passwordRules }: Props) {
                     <>
                         <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <label
-                                    htmlFor="name"
-                                    className="text-sm font-semibold"
-                                >
+                                <label htmlFor="name" className="text-sm font-semibold">
                                     ニックネーム
                                 </label>
                                 <input
@@ -40,17 +37,11 @@ export default function Register({ passwordRules }: Props) {
                                     placeholder="えんがわ 太郎"
                                     className={inputClass}
                                 />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
+                                <InputError message={errors.name} className="mt-2" />
                             </div>
 
                             <div className="grid gap-2">
-                                <label
-                                    htmlFor="email"
-                                    className="text-sm font-semibold"
-                                >
+                                <label htmlFor="email" className="text-sm font-semibold">
                                     メールアドレス
                                 </label>
                                 <input
@@ -67,10 +58,7 @@ export default function Register({ passwordRules }: Props) {
                             </div>
 
                             <div className="grid gap-2">
-                                <label
-                                    htmlFor="password"
-                                    className="text-sm font-semibold"
-                                >
+                                <label htmlFor="password" className="text-sm font-semibold">
                                     パスワード
                                 </label>
                                 <PasswordInput
@@ -103,9 +91,7 @@ export default function Register({ passwordRules }: Props) {
                                     passwordrules={passwordRules}
                                     className={inputClass}
                                 />
-                                <InputError
-                                    message={errors.password_confirmation}
-                                />
+                                <InputError message={errors.password_confirmation} />
                             </div>
 
                             <button
@@ -120,11 +106,7 @@ export default function Register({ passwordRules }: Props) {
 
                         <div className="text-center text-sm text-stone-600">
                             すでにアカウントをお持ちの方は{' '}
-                            <Link
-                                href={login()}
-                                className={textLinkClass}
-                                tabIndex={6}
-                            >
+                            <Link href={login()} className={textLinkClass} tabIndex={6}>
                                 ログイン
                             </Link>
                         </div>
@@ -132,10 +114,10 @@ export default function Register({ passwordRules }: Props) {
                 )}
             </Form>
         </>
-    );
+    )
 }
 
 Register.layout = {
     title: '新規登録',
     description: '必要事項を入力してアカウントを作成してください。',
-};
+}
