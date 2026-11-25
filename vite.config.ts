@@ -1,10 +1,10 @@
-import inertia from '@inertiajs/vite';
-import { wayfinder } from '@laravel/vite-plugin-wayfinder';
-import babel from '@rolldown/plugin-babel';
-import tailwindcss from '@tailwindcss/vite';
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
-import laravel from 'laravel-vite-plugin';
-import { defineConfig, lazyPlugins } from 'vite-plus';
+import inertia from '@inertiajs/vite'
+import { wayfinder } from '@laravel/vite-plugin-wayfinder'
+import babel from '@rolldown/plugin-babel'
+import tailwindcss from '@tailwindcss/vite'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
+import laravel from 'laravel-vite-plugin'
+import { defineConfig, lazyPlugins } from 'vite-plus'
 
 export default defineConfig({
     plugins: lazyPlugins(() => [
@@ -51,10 +51,8 @@ export default defineConfig({
         },
     },
     fmt: {
-        printWidth: 80,
-        tabWidth: 4,
         singleQuote: true,
-        semi: true,
+        semi: false,
         singleAttributePerLine: false,
         htmlWhitespaceSensitivity: 'css',
         ignorePatterns: [
@@ -74,4 +72,4 @@ export default defineConfig({
         '*.{js,jsx,ts,tsx,css,md,json,yaml,yml}': 'vp check --fix',
         '*.php': 'vendor/bin/pint',
     },
-});
+})
